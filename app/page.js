@@ -9,12 +9,12 @@ const Home = () => {
           <Header/>
           <main>
               <section className="flex justify-center items-center mt-3">
-                  <input type="text" placeholder="&#xf002 جستجوی شهر"
+                  <input type="text" placeholder="جستجوی شهر"
                          className="border fa border-gray-300 w-5/6 ps-4 py-3 rounded-md lg:w-1/2 placeholder:text-gray-400 placeholder:text-lg"/>
               </section>
 
 
-              <section className="container flex justify-center w-1/2 flex-col">
+              <section className="container flex justify-center w-1/2 flex-col mx-auto items-center">
                   <header className="flex justify-center items-center mt-10 lg:justify-start">
                       <h2 className="text-lg">شهر های پربازدید</h2>
                   </header>
