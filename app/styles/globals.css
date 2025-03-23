@@ -1,8 +1,9 @@
 @import "tailwindcss";
 :root {
-    --font-vazirmatn: 'Vazirmatn', sans-serif;
+  --font-vazirmatn: "Vazirmatn", sans-serif;
 }
+
 body {
-    font-family: var(--font-vazirmatn), sans-serif;
-    direction: rtl;
+  font-family: var(--font-vazirmatn), sans-serif;
+  direction: rtl;
 }
