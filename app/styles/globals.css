@@ -4,6 +4,11 @@
 
 :root {
   --font-vazirmatn: "Vazirmatn", sans-serif;
+  --primary-bg: #1a1a2e;
+  --sidebar-bg: #16213e;
+  --hover-bg: #0f3460;
+  --text-color: #ffffff;
+  --highlight-color: #e94560;
 }
 
 body {
