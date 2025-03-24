@@ -1,6 +1,6 @@
+import MainHeader from "./components/ui/home/MainHeader";
 import "./styles/globals.css";
 import localFont from "next/font/local";
-import {MainHeader} from "@/app/components/ui/home/MainHeader";
 
 export const metadata = {
   title: "Create Next App",
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <MainHeader/>
+        <MainHeader />
         {children}
       </body>
     </html>

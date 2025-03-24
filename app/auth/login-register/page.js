@@ -22,8 +22,7 @@ const LoginRegister = () => {
               شماره موبایل
             </label>
             <input
-              type="number"
-              dir="ltr"
+              type="text"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-rose-800 focus:border-rose-800 placeholder-gray-400"
               placeholder="۰۹۱۲۱۲۳۴۵۶۷"
             />
