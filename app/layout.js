@@ -1,5 +1,6 @@
 import "./styles/globals.css";
 import localFont from "next/font/local";
+import {MainHeader} from "@/app/components/ui/home/MainHeader";
 
 export const metadata = {
   title: "Create Next App",
@@ -32,7 +33,10 @@ export default function RootLayout({ children }) {
           href="/font-awesome-4.7.0/css/font-awesome.min.css"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <MainHeader/>
+        {children}
+      </body>
     </html>
   );
 }
