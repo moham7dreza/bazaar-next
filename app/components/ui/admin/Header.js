@@ -3,7 +3,7 @@ import React from "react";
 const Header = () => {
   return (
     <header>
-      <nav className="flex justify-between items-center p-4 bg-[var(--primary-bg)] text-[var(--text-color)]">
+      <nav className="flex justify-between items-center p-4 bg-[var(--sidebar-bg)] text-[var(--text-color)]">
         <div>
           <h1 className="text-2xl font-bold">پنل مدیریت</h1>
         </div>
