@@ -1,5 +1,8 @@
 import "./../styles/globals.css";
 import localFont from "next/font/local";
+import Sidebar from "@/app/components/ui/admin/Sidebar";
+import Header from "@/app/components/ui/admin/Header";
+import React from "react";
 
 export const metadata = {
   title: "Create Next App",
@@ -32,7 +35,20 @@ export default function RootLayout({ children }) {
           href="/font-awesome-4.7.0/css/font-awesome.min.css"
         />
       </head>
-      <body>{children}</body>
+      <body>
+      <div className="flex min-h-screen">
+        <div className="w-1/6 bg-[var(--sidebar-bg)] text-[var(--text-color)] p-4">
+          <Sidebar />
+        </div>
+
+        <div className="w-5/6 p-4">
+          <Header />
+          <main className="content">
+            {children}
+          </main>
+        </div>
+      </div>
+      </body>
     </html>
   );
 }
