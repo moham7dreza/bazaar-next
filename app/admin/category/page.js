@@ -1,38 +1,45 @@
-import React from 'react';
-import CategoryIndex from "@/app/admin/category/CategoryIndex";
+import React from "react";
+import CategoryList from "./CategoryList";
 
-const Category = async () => {
+const CategoryPage = async () => {
+  let categories;
 
-    let categories;
+  try {
+    const res = await fetch(
+      `http://bazaar-laravel.test/api/admin/advertise/category`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+        cache: "no-store",
+      }
+    );
 
-    try {
-        const result = await fetch(
-            'http://bazaar-laravel.test/api/admin/advertise/category',
-            {
-                headers: {
-                    'Accept': 'application/json'
-                },
-                cache: 'no-store'
-            }
-        )
-
-        if (!result.ok) {
-            console.error('failed to get category')
-        }
-        categories = await result.json()
-
-        if (!categories.status) {
-            console.error('failed to get category')
-        }
-    } catch (err) {
-        console.error(err)
+    if (!res.ok) {
+      throw new Error("خطا در دریافت اطلاعات");
     }
 
-    return (
-        <div>
-            <CategoryIndex categories={categories} />
-        </div>
-    );
+    categories = await res.json();
+
+    if (!categories.status) {
+      throw new Error("خطا در دریافت اطلاعات");
+    }
+      console.log(categories)
+  } catch (err) {
+    console.log(err);
+  }
+  return (
+    <div className="w-full p-4">
+      <h1 className="text-2xl mb-4">لیست دسته بندی ها</h1>
+
+      <div>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mb-4">
+          ساخت
+        </button>
+      </div>
+      <CategoryList categories={categories} />
+    </div>
+  );
 };
 
-export default CategoryIndex;
+export default CategoryPage;

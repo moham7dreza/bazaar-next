@@ -15,8 +15,15 @@ const Sidebar = () => {
         href="/admin/category"
         className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
       >
+        <i className="fa fa-ra"></i>
+        <span>دسته بندی ها</span>
+      </Link>
+      <Link
+        href="/admin"
+        className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+      >
         <i className="fa fa-home"></i>
-        <span>دسته بندی</span>
+        <span>داشبورد</span>
       </Link>
     </nav>
   );
