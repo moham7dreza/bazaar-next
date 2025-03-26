@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
           <Sidebar />
         </div>
 
-        <div className="w-5/6 p-4">
+        <div className="w-5/6 p-2">
           <Header />
           <main className="content">
             {children}
