@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./../components/ui/home/Header";
-import Footer from "./../components/ui/home/Footer";
 import Image from "next/image";
+import Header from "@/app/components/ui/home/Header";
+import Footer from "@/app/components/ui/home/Footer";
 
 const Home = () => {
   return (

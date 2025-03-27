@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Sidebar from "./components/ui/home/Sidebar";
+import Sidebar from "@/app/components/ui/home/Sidebar";
 
 const Home = () => {
   return (
