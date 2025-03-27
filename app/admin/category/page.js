@@ -7,7 +7,7 @@ const CategoryPage = async () => {
 
   try {
     const res = await fetch(
-      `http://bazaar-laravel.test/api/admin/advertise/category`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
       {
         headers: {
           Accept: "application/json",
@@ -25,7 +25,6 @@ const CategoryPage = async () => {
     if (!categories.status) {
       throw new Error("خطا در دریافت اطلاعات");
     }
-      // console.log(categories)
   } catch (err) {
     console.log(err);
   }
@@ -34,7 +33,10 @@ const CategoryPage = async () => {
       <h1 className="text-2xl mb-4">لیست دسته بندی ها</h1>
 
       <div>
-        <Link href='/admin/category/create' className="bg-blue-500 text-white px-4 py-2 inline-block rounded-md hover:bg-blue-600 mb-4">
+        <Link
+          href={"/admin/category/create"}
+          className="bg-blue-500 text-white px-4 py-2 inline-block rounded-md hover:bg-blue-600 mb-4"
+        >
           ساخت
         </Link>
       </div>

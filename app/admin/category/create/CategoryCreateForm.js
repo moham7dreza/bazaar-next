@@ -1,50 +1,47 @@
-'use client'
-import React, {useEffect, useState} from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 
 const CategoryCreateForm = () => {
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [status, setStatus] = useState(false)
-    const [icon, setIcon] = useState('')
-    const [parentId, setParentId] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(null)
-    const [csrfToken, setCsrfToken] = useState(null)
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
+  const [icon, setIcon] = useState("");
+  const [parentId, setParentId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [csrfToken, setCsrfToken] = useState(null);
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        console.log(`وضعیت توکن`, response.status);
 
-        const fetchCsrfToken = async () => {
-            try {
-                const res = await fetch(
-                    `http://bazaar-laravel.test/sanctum/csrf-cookie`,
-                    {
-                        method: 'GET',
-                        credentials: 'include',
-                    }
-                )
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("XSRF-TOKEN="))
+          ?.split("=")[1];
 
-                console.log(res.status, document.cookie.split('; '))
-
-                const token = document.cookie.split('; ').find(row => row.startsWith('XSRF-TOKEN'))?.split('=')[1];
-                console.log(token)
-
-                if (token) {
-                    setCsrfToken(token)
-                }
-            } catch (err) {
-                setError('Failed to fetch CSRF token.')
-                console.error(err)
-            }
+        console.log(token)
+        if (token) {
+          setCsrfToken(token);
         }
-        fetchCsrfToken();
-    }, []);
+      } catch (err) {
+        setError(`خطایی در دریافت CSRF`);
+        console.log("خطا", err.message);
+      }
+    };
+    fetchCsrfToken();
+  }, []);
 
-    return (
-        <div>
-            
-        </div>
-    );
+  return <div></div>;
 };
 
 export default CategoryCreateForm;
