@@ -14,12 +14,18 @@ const CategoryList = ({ categories }) => {
     return jalaliDate;
   };
 
+  const getParentName = (parentId) => {
+    const parent = categories.data.find((cat) => cat.id === parentId);
+    return parent ? parent.name : "دسته اصلی";
+  };
+
   return (
     <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-md">
       <thead className="bg-gray-100">
         <tr>
           <th className="border px-4 py-2 text-right">شناسه</th>
           <th className="border px-4 py-2 text-right">نام</th>
+          <th className="border px-4 py-2 text-right">دسته پدر</th>
           <th className="border px-4 py-2 text-right">توضیحات</th>
           <th className="border px-4 py-2 text-right">وضعیت</th>
           <th className="border px-4 py-2 text-right">تاریخ</th>
@@ -33,6 +39,9 @@ const CategoryList = ({ categories }) => {
             <tr key={category.id} className="hover:bg-gray-50">
               <td className="border px-4 py-2 text-right">{category.id}</td>
               <td className="border px-4 py-2 text-right">{category.name}</td>
+              <td className="border px-4 py-2 text-right">
+                {getParentName(category.parent_id)}
+              </td>
               <td className="border px-4 py-2 text-right">
                 {category.description}
               </td>
