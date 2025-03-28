@@ -19,11 +19,11 @@ const Sidebar = () => {
         <span>دسته بندی ها</span>
       </Link>
       <Link
-        href="/admin"
+        href="/admin/menu"
         className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
       >
         <i className="fa fa-home"></i>
-        <span>داشبورد</span>
+        <span>منو</span>
       </Link>
     </nav>
   );
