@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -110,9 +111,12 @@ const CategoryList = ({ categories }) => {
                   {converterToJalali(category.created_at)}
                 </td>
                 <td className="border px-4 py-2 text-right">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
+                  <Link
+                    href={`/admin/category/edit/${category.id}`}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2"
+                  >
                     <i className="fa fa-edit"></i>
-                  </button>
+                  </Link>
                   <button
                     onClick={() => handleDelete(category.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -127,7 +131,9 @@ const CategoryList = ({ categories }) => {
       </table>
       {error && <div className="text-red-500 text-center my-4">{error}</div>}
       {success && (
-        <div className="bg-green-300 text-3xl text-green-800 py-3 rounded-lg text-center my-4">{success}</div>
+        <div className="bg-green-300 text-3xl text-green-800 py-3 rounded-lg text-center my-4">
+          {success}
+        </div>
       )}
     </div>
   );
