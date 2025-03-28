@@ -2,32 +2,21 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import {converterToJalali} from "@/app/lib/timeUtils";
 
-const MenuList = ({ categories }) => {
+const MenuList = ({ menus }) => {
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const router = useRouter();
 
-  const converterToJalali = (date) => {
-    const options = {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      calender: "persian",
-    };
-
-    const jalaliDate = new Date(date).toLocaleDateString("fa-IR", options);
-    return jalaliDate;
-  };
-
   const getParentName = (parentId) => {
-    const parent = categories.data.find((cat) => cat.id === parentId);
-    return parent ? parent.name : "دسته اصلی";
+    const parent = menus.data.find((item) => item.id === parentId);
+    return parent ? parent.name : "منو اصلی";
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("آیا از حذف این دسته اطمینان دارید؟")) {
+    if (!confirm("آیا از حذف این منو اطمینان دارید؟")) {
       return;
     }
 
@@ -63,9 +52,9 @@ const MenuList = ({ categories }) => {
           }
         );
         if (!res.ok) {
-          throw new Error("خطا در حذف دسته");
+          throw new Error("خطا در حذف منو");
         }
-        setSuccess("دسته با موفقیت حذف شد");
+        setSuccess("منو با موفقیت حذف شد");
         setTimeout(() => {
           router.refresh();
         }, 1000);
@@ -85,7 +74,7 @@ const MenuList = ({ categories }) => {
             <th className="border px-4 py-2 text-right">شناسه</th>
             <th className="border px-4 py-2 text-right">نام</th>
             <th className="border px-4 py-2 text-right">دسته پدر</th>
-            <th className="border px-4 py-2 text-right">توضیحات</th>
+            <th className="border px-4 py-2 text-right">ادرس</th>
             <th className="border px-4 py-2 text-right">وضعیت</th>
             <th className="border px-4 py-2 text-right">تاریخ</th>
             <th className="border px-4 py-2 text-right">عملیات</th>
@@ -93,32 +82,32 @@ const MenuList = ({ categories }) => {
         </thead>
 
         <tbody>
-          {categories.data.map((category) => {
+          {menus?.data.map((menu) => {
             return (
-              <tr key={category.id} className="hover:bg-gray-50">
-                <td className="border px-4 py-2 text-right">{category.id}</td>
-                <td className="border px-4 py-2 text-right">{category.name}</td>
+              <tr key={menu.id} className="hover:bg-gray-50">
+                <td className="border px-4 py-2 text-right">{menu.id}</td>
+                <td className="border px-4 py-2 text-right">{menu.title}</td>
                 <td className="border px-4 py-2 text-right">
-                  {getParentName(category.parent_id)}
+                  {getParentName(menu.parent_id)}
+                </td>
+                <td className="border px-4 py-2 text-center">
+                  <Link dir='ltr' href={menu.url}>{menu.url}</Link>
                 </td>
                 <td className="border px-4 py-2 text-right">
-                  {category.description}
+                  {menu.status ? "فعال" : "غیرفعال"}
                 </td>
                 <td className="border px-4 py-2 text-right">
-                  {category.status ? "فعال" : "غیرفعال"}
-                </td>
-                <td className="border px-4 py-2 text-right">
-                  {converterToJalali(category.created_at)}
+                  {converterToJalali(menu.created_at)}
                 </td>
                 <td className="border px-4 py-2 text-right">
                   <Link
-                    href={`/admin/category/edit/${category.id}`}
+                    href={`/admin/menu/edit/${menu.id}`}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2"
                   >
                     <i className="fa fa-edit"></i>
                   </Link>
                   <button
-                    onClick={() => handleDelete(category.id)}
+                    onClick={() => handleDelete(menu.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   >
                     <i className="fa fa-trash"></i>

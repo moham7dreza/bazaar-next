@@ -1,18 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import {apiGet} from "@/app/lib/fetchUtils";
+import MenuList from "@/app/admin/menu/MenuList";
 
 const MenuPage = async () => {
-    let menus;
 
     const result = await apiGet('/api/admin/content/menu');
 
-    menus = result.data
-
-    console.log(menus)
     return (
         <div className="w-full p-4">
-            <h1 className="text-2xl mb-4">لیست دسته بندی ها</h1>
+            <h1 className="text-2xl mb-4">لیست منو ها</h1>
 
             <div>
                 <Link
@@ -22,6 +19,8 @@ const MenuPage = async () => {
                     ساخت
                 </Link>
             </div>
+
+            <MenuList menus={result}/>
         </div>
     );
 };

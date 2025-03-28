@@ -93,7 +93,7 @@ const CategoryList = ({ categories }) => {
         </thead>
 
         <tbody>
-          {categories.data.map((category) => {
+          {categories?.data.map((category) => {
             return (
               <tr key={category.id} className="hover:bg-gray-50">
                 <td className="border px-4 py-2 text-right">{category.id}</td>
