@@ -1,16 +1,19 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const CategoryCreateForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("1");
   const [icon, setIcon] = useState("");
   const [parentId, setParentId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [csrfToken, setCsrfToken] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
@@ -37,6 +40,30 @@ const CategoryCreateForm = () => {
       }
     };
     fetchCsrfToken();
+  }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        const result = await response.json();
+        setCategories(result.data);
+      } catch (err) {
+        setError(`خطایی در دریافت دسته بندی ها`);
+        console.log("خطا", err.message);
+      }
+    };
+    fetchCategories();
   }, []);
 
   const validateForm = () => {
@@ -122,6 +149,9 @@ const CategoryCreateForm = () => {
       setStatus("1");
       setIcon("");
       setParentId(null);
+      setTimeout(() => {
+        router.push("/admin/category");
+      }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
       // console.log("خطا", error.message);
@@ -229,7 +259,12 @@ const CategoryCreateForm = () => {
               placeholder="توضیحات دسته بندی"
               required
             >
-              <option value="0">غیرفعال</option>
+              <option value="">دسته اصلی</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
         </div>
