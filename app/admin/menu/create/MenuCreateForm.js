@@ -3,16 +3,19 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const MenuCreateForm = () => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
+  const [position, setPosition] = useState("");
   const [status, setStatus] = useState("1");
   const [icon, setIcon] = useState("");
   const [parentId, setParentId] = useState(null);
+  //
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  //
   const [csrfToken, setCsrfToken] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [menus, setMenus] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,10 +46,10 @@ const MenuCreateForm = () => {
   }, []);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchMenus = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/content/menu`,
           {
             method: "GET",
             headers: {
@@ -57,22 +60,26 @@ const MenuCreateForm = () => {
           }
         );
         const result = await response.json();
-        setCategories(result.data);
+        setMenus(result.data);
       } catch (err) {
-        setError(`خطایی در دریافت دسته بندی ها`);
+        setError(`خطایی در دریافت منو ها`);
         console.log("خطا", err.message);
       }
     };
-    fetchCategories();
+    fetchMenus();
   }, []);
 
   const validateForm = () => {
-    if (name.length < 2 || name.length > 120) {
+    if (title.length < 2 || title.length > 120) {
       setError("نام باید بین ۲ تا ۱۲۰ کاراکتر باشد");
       return false;
     }
-    if (description.length < 2 || description.length > 500) {
-      setError("توضیحات باید بین ۲ تا ۵۰۰ کاراکتر باشد");
+    if (url.length < 2 || url.length > 500) {
+      setError("آدرس باید بین ۲ تا ۵۰۰ کاراکتر باشد");
+      return false;
+    }
+    if (position.length < 2 || position.length > 500) {
+      setError("مکان منو باید بین ۲ تا ۵۰۰ کاراکتر باشد");
       return false;
     }
     if (status !== "0" && status !== "1") {
@@ -102,18 +109,17 @@ const MenuCreateForm = () => {
     setSuccess(null);
 
     const dataToSend = {
-      name,
-      description,
+      title,
+      position,
+      url,
       status,
       icon,
       parent_id: parentId ? parseInt(parentId) : null,
     };
 
-    console.log("hi");
-
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/content/menu`,
         {
           method: "POST",
           headers: {
@@ -143,14 +149,15 @@ const MenuCreateForm = () => {
         throw new Error("خطایی رخ داده است");
       }
 
-      setSuccess("دسته بندی با موفقیت ایجاد شد");
-      setName("");
-      setDescription("");
+      setSuccess("منو با موفقیت ایجاد شد");
+      setTitle("");
+      setPosition("");
+      setUrl("");
       setStatus("1");
       setIcon("");
       setParentId(null);
       setTimeout(() => {
-        router.push("/admin/category");
+        router.push("/admin/menu");
       }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
@@ -166,18 +173,18 @@ const MenuCreateForm = () => {
         <div className="grid grid-cols-1 gap-6">
           <div>
             <label
-              htmlFor="name"
+              htmlFor="title"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              نام
+              عنوان
             </label>
             <input
               type="text"
-              id="name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              id="title"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="نام دسته بندی"
+              placeholder="عنوان منو"
               required
             />
             <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۱۲۰ کاراکتر</p>
@@ -185,20 +192,39 @@ const MenuCreateForm = () => {
 
           <div>
             <label
-              htmlFor="description"
+              htmlFor="url"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              توضیحات
+              آدرس
             </label>
-            <textarea
-              type="text"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              id="description"
+            <input
+                type="text"
+              onChange={(e) => setUrl(e.target.value)}
+              value={url}
+              id="url"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات دسته بندی"
+              placeholder="آدرس منو"
               required
-            ></textarea>
+            ></input>
+            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
+          </div>
+
+          <div>
+            <label
+                htmlFor="position"
+                className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              مکان
+            </label>
+            <input
+                type="text"
+                onChange={(e) => setPosition(e.target.value)}
+                value={position}
+                id="position"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
+                placeholder="مکان منو"
+                required
+            ></input>
             <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
           </div>
 
@@ -210,18 +236,15 @@ const MenuCreateForm = () => {
               وضعیت
             </label>
             <select
-              type="text"
               onChange={(e) => setStatus(e.target.value)}
               value={status}
               id="status"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات دسته بندی"
               required
             >
               <option value="1">فعال</option>
               <option value="0">غیرفعال</option>
             </select>
-            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
           </div>
 
           <div>
@@ -248,21 +271,19 @@ const MenuCreateForm = () => {
               htmlFor="parent_id"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              دسته پدر
+              منوی والد
             </label>
             <select
-              type="text"
               onChange={(e) => setParentId(e.target.value)}
               value={parentId || ""}
               id="parent_id"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات دسته بندی"
               required
             >
               <option value="">دسته اصلی</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
+              {menus?.map((menu) => (
+                <option key={menu.id} value={menu.id}>
+                  {menu.title}
                 </option>
               ))}
             </select>

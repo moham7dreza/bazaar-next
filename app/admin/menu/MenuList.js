@@ -40,7 +40,7 @@ const MenuList = ({ menus }) => {
         ?.split("=")[1];
       if (token) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/content/menu/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -73,7 +73,7 @@ const MenuList = ({ menus }) => {
           <tr>
             <th className="border px-4 py-2 text-right">شناسه</th>
             <th className="border px-4 py-2 text-right">نام</th>
-            <th className="border px-4 py-2 text-right">دسته پدر</th>
+            <th className="border px-4 py-2 text-right">منوی والد</th>
             <th className="border px-4 py-2 text-right">ادرس</th>
             <th className="border px-4 py-2 text-right">وضعیت</th>
             <th className="border px-4 py-2 text-right">تاریخ</th>
