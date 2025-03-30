@@ -63,7 +63,7 @@ export const apiFetch = async (url, options = {}) => {
         credentials: 'include',
         cache: 'no-store',
     });
-    console.log(response)
+    // console.log(response)
     if (!response.ok) {
         const error = await response.json().catch(() => ({}));
         throw new Error(error.message || 'Request failed');
