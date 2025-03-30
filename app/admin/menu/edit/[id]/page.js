@@ -1,9 +1,9 @@
 import React from "react";
 import MenuEditForm from "./MenuEditForm";
 
-async function getCategory(id) {
+async function getMenu(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/content/menu/${id}`,
     {
       method: "GET",
       headers: {
@@ -12,13 +12,13 @@ async function getCategory(id) {
       cache: "no-store",
     }
   );
-  if (!res.ok) throw new Error("خطایی در دریافت دسته بندی ها");
+  if (!res.ok) throw new Error("خطایی در دریافت منو");
   return res.json();
 }
 
-async function getCategroies() {
+async function getMenus() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/content/menu`,
     {
       method: "GET",
       headers: {
@@ -28,18 +28,18 @@ async function getCategroies() {
       cache: "force-cache",
     }
   );
-  if (!response.ok) throw new Error("خطایی در دریافت دسته بندی ها");
+  if (!response.ok) throw new Error("خطایی در دریافت منو ها");
 
   return response.json();
 }
 
 const MenuEditPage = async ({ params }) => {
-  const category = await getCategory(params.id);
-  const categories = await getCategroies();
+  const menu = await getMenu(params.id);
+  const menus = await getMenus();
   return (
     <div className="w-full p-4">
-      <h1 className="text-2xl mb-4">ویرایش دسته بندی </h1>
-      <MenuEditForm category={category.data} categories={categories.data} />
+      <h1 className="text-2xl mb-4">ویرایش منو </h1>
+      <MenuEditForm menu={menu.data} menus={menus.data} />
     </div>
   );
 };
