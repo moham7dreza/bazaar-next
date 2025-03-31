@@ -49,8 +49,24 @@ const Sidebar = () => {
             target='_blank'
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
         >
-            <i className="fa fa-braille"></i>
+            <i className="fa fa-wrench"></i>
             <span>لاگینگ</span>
+        </a>
+        <a
+            href={`${process.env.NEXT_PUBLIC_API_URL}/pulse`}
+            target='_blank'
+            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+        >
+            <i className="fa fa-wrench"></i>
+            <span>پالس</span>
+        </a>
+        <a
+            href={`${process.env.NEXT_PUBLIC_API_URL}/telescope`}
+            target='_blank'
+            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+        >
+            <i className="fa fa-wrench"></i>
+            <span>تلسکوپ</span>
         </a>
     </nav>
   );
