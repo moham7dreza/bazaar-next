@@ -37,36 +37,12 @@ const Sidebar = () => {
             <span>مستندات API</span>
         </a>
         <a
-            href={`${process.env.NEXT_PUBLIC_API_URL}/health?fresh`}
+            href={`${process.env.NEXT_PUBLIC_API_URL}/super-admin`}
             target='_blank'
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
         >
-            <i className="fa fa-wrench"></i>
-            <span>پنل سلامت بکند</span>
-        </a>
-        <a
-            href={`${process.env.NEXT_PUBLIC_API_URL}/log-viewer`}
-            target='_blank'
-            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
-        >
-            <i className="fa fa-wrench"></i>
-            <span>لاگینگ</span>
-        </a>
-        <a
-            href={`${process.env.NEXT_PUBLIC_API_URL}/pulse`}
-            target='_blank'
-            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
-        >
-            <i className="fa fa-wrench"></i>
-            <span>پالس</span>
-        </a>
-        <a
-            href={`${process.env.NEXT_PUBLIC_API_URL}/telescope`}
-            target='_blank'
-            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
-        >
-            <i className="fa fa-wrench"></i>
-            <span>تلسکوپ</span>
+            <i className="fa fa-user-secret"></i>
+            <span>پنل سوپر ادمین</span>
         </a>
     </nav>
   );
