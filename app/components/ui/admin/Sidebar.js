@@ -49,6 +49,13 @@ const Sidebar = () => {
             <i className="fa fa-user-secret"></i>
             <span>پنل سوپر ادمین</span>
         </a>
+        <a
+            href={'https://github.com/moham7dreza'}
+            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+        >
+            <i className="fa fa-github"></i>
+            <span>گیت هاب</span>
+        </a>
     </nav>
   );
 };
