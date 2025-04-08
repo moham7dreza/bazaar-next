@@ -6,7 +6,7 @@ export async function middleware (request) {
 
     const loginUri = '/auth/login-register'
 
-    if (pathname.startsWith('/admin')) {
+    if (pathname.startsWith('/admin-test')) {
         const token = request.cookies.get('XSRF-TOKEN')?.value
 
         if (!token) {
@@ -25,6 +25,7 @@ export async function middleware (request) {
             })
 
             const user = await response.json()
+            console.info('user response from back : ', user)
 
             if (user.user_type !== 1 || !user.mobile_verified_at) {
                 // user login but is not admin
