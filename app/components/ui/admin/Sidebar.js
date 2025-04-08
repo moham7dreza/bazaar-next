@@ -29,8 +29,14 @@ const Sidebar = () => {
         <div className="border border-gray-700"></div>
 
         <a
+            href={`${process.env.NEXT_PUBLIC_API_URL}/`}
+            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+        >
+            <i className="fa fa-server"></i>
+            <span>بکند</span>
+        </a>
+        <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/docs/api`}
-            target='_blank'
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
         >
             <i className="fa fa-book"></i>
@@ -38,7 +44,6 @@ const Sidebar = () => {
         </a>
         <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/super-admin`}
-            target='_blank'
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
         >
             <i className="fa fa-user-secret"></i>
