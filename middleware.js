@@ -4,11 +4,13 @@ import {apiGet} from "@/app/lib/fetchUtils";
 export async function middleware (request) {
     const {pathname} = request.nextUrl
 
+    const loginUri = '/auth/login-register'
+
     if (pathname.startsWith('/admin')) {
         const token = request.cookies.get('XSRF-TOKEN')?.value
 
         if (!token) {
-            return NextResponse.redirect(new URL('/login', request.url))
+            return NextResponse.redirect(new URL(loginUri, request.url))
         }
 
         try {
@@ -30,13 +32,13 @@ export async function middleware (request) {
             }
 
             if (!response.ok) {
-                return NextResponse.redirect(new URL('/login', request.url))
+                return NextResponse.redirect(new URL(loginUri, request.url))
             }
 
             return NextResponse.next()
 
         } catch (error) {
-            return NextResponse.redirect(new URL('/login', request.url))
+            return NextResponse.redirect(new URL(loginUri, request.url))
         }
     }
 
