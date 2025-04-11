@@ -1,5 +1,4 @@
+./fix-permissions.sh
 git pull
-npm install
-next info
-npm run lint
-npm run dev
+sudo cp .env.example .env
+npm run reload
