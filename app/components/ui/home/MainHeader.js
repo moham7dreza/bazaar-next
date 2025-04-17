@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const MainHeader = () => {
   return (
@@ -88,9 +89,9 @@ const MainHeader = () => {
         </section>
 
         <section className="hidden lg:flex text-gray-500">
-          <button className="flex justify-center items-center bg-red-700 text-white px-5 py-2 font-bold rounded">
+          <Link href="/admin" className="flex justify-center items-center bg-red-700 text-white px-5 py-2 font-bold rounded">
             ثبت آگهی
-          </button>
+          </Link>
         </section>
       </header>
     </div>

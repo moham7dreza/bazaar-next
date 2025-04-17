@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -16,7 +17,7 @@ const Header = () => {
 
       <section className="border-b">
         <nav className="container flex justify-around items-center space-x-1 space-x-reverse text-gray-500 text-xs md:text-sm lg:text-lg font-light pb-4 px-8">
-          <a href="">ثبت آگهی</a>
+          <Link href="/admin">ثبت آگهی</Link>
           <a href="">درباره دیوار</a>
           <a href="">دریافت برنامه</a>
           <a href="">اتاق خبر</a>
