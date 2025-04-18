@@ -30,12 +30,12 @@ install: ## Initialize project
 
 dev: ## Full development setup
 	make reload
-	npm run dev
+	next dev --turbopack
 
 reload: ## Update and refresh application
 	@echo "${COLOR_BLUE}▶ Updating and refreshing application...${COLOR_RESET}"
 	git pull
 	npm install
 	next info
-	npm run lint
+	next lint
 	@echo "${COLOR_GREEN}✓ Application reloaded successfully!${COLOR_RESET}"
