@@ -26,6 +26,13 @@ const Sidebar = () => {
         <span>منو</span>
       </Link>
         <Link
+        href="/admin/page"
+        className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+      >
+        <i className="fa fa-paperclip"></i>
+        <span>صفحه ها</span>
+      </Link>
+        <Link
         href="/admin/state"
         className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
       >
