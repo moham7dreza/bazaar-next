@@ -29,7 +29,6 @@ install: ## Initialize project
 	make dev
 
 dev: ## Full development setup
-	make reload
 	next dev --turbopack
 
 reload: ## Update and refresh application

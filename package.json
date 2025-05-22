@@ -6,7 +6,8 @@
     "dev": "make dev",
     "build": "next build",
     "start": "next start",
-    "init": "make install"
+    "init": "make install",
+    "reload": "make reload"
   },
   "dependencies": {
     "next": "^15.3.1",
