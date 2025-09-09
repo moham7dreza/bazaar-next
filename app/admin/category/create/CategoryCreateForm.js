@@ -46,7 +46,7 @@ const CategoryCreateForm = () => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category`,
           {
             method: "GET",
             headers: {

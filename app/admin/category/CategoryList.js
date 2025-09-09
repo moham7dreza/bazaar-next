@@ -51,7 +51,7 @@ const CategoryList = ({ categories }) => {
         ?.split("=")[1];
       if (token) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category/${id}`,
           {
             method: "DELETE",
             headers: {

@@ -86,7 +86,7 @@ const StateEditForm = ({ state, states }) => {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state/${state.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state/${state.id}`,
         {
           method: "PUT",
           headers: {

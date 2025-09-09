@@ -7,7 +7,7 @@ const CategoryPage = async () => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category`,
       {
         headers: {
           Accept: "application/json",

@@ -7,7 +7,7 @@ const StatePage = async () => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state`,
       {
         headers: {
           Accept: "application/json",

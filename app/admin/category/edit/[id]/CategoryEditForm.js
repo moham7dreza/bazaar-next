@@ -86,7 +86,7 @@ const CategoryEditForm = ({ category, categories }) => {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category/${category.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category/${category.id}`,
         {
           method: "PUT",
           headers: {

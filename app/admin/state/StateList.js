@@ -51,7 +51,7 @@ const StateList = ({ states }) => {
         ?.split("=")[1];
       if (token) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state/${id}`,
           {
             method: "DELETE",
             headers: {
