@@ -2,17 +2,17 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const StateCreateForm = () => {
+const CategoryAttributeCreateForm = () => {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("1");
-  const [icon, setIcon] = useState("");
-  const [parentId, setParentId] = useState(null);
+  const [unit, setUnit] = useState("");
+  const [status, setStatus] = useState("0");
+  const [type, setType] = useState("0");
+  const [categoryId, setCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [csrfToken, setCsrfToken] = useState(null);
-  const [states, setStates] = useState([]);
+  const [categories, setCategories] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,10 +43,10 @@ const StateCreateForm = () => {
   }, []);
 
   useEffect(() => {
-    const fetchStates = async () => {
+    const fetchCategories = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category`,
           {
             method: "GET",
             headers: {
@@ -57,13 +57,13 @@ const StateCreateForm = () => {
           }
         );
         const result = await response.json();
-        setStates(result.data);
+        setCategories(result.data);
       } catch (err) {
         setError(`خطایی در دریافت مناطق`);
         console.log("خطا", err.message);
       }
     };
-    fetchStates();
+    fetchCategories();
   }, []);
 
   const validateForm = () => {
@@ -71,18 +71,23 @@ const StateCreateForm = () => {
       setError("نام باید بین ۲ تا ۱۲۰ کاراکتر باشد");
       return false;
     }
-    if (description.length < 2 || description.length > 500) {
-      setError("توضیحات باید بین ۲ تا ۵۰۰ کاراکتر باشد");
+    if (unit.length < 2 || unit.length > 120) {
+      setError("واحد باید بین ۲ تا ۱۲۰ کاراکتر باشد");
       return false;
     }
     if (status !== "0" && status !== "1") {
       setError("وضعیت باید یکی از مقادیر ۰ یا ۱ باشد");
       return false;
     }
-    if (icon.length < 1 || icon.length > 120) {
-      setError("آیکون باید بین ۱ تا ۱۲۰ کاراکتر باشد");
+    if (type !== "0" && type !== "1") {
+      setError("نوع باید یکی از مقادیر ۰ یا ۱ باشد");
       return false;
     }
+    if (!categoryId) {
+      setError("انتخاب دسته بندی اجباری است");
+      return false;
+    }
+
     return true;
   };
 
@@ -103,15 +108,15 @@ const StateCreateForm = () => {
 
     const dataToSend = {
       name,
-      description,
+      unit,
       status,
-      icon,
-      parent_id: parentId ? parseInt(parentId) : null,
+      type,
+      category_id: parseInt(categoryId),
     };
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category-attribute`,
         {
           method: "POST",
           headers: {
@@ -141,14 +146,14 @@ const StateCreateForm = () => {
         throw new Error("خطایی رخ داده است");
       }
 
-      setSuccess("منطقه با موفقیت ایجاد شد");
+      setSuccess("ویژگی با موفقیت ایجاد شد");
       setName("");
-      setDescription("");
-      setStatus("1");
-      setIcon("");
-      setParentId(null);
+      setUnit("");
+      setStatus("0");
+      setType("0");
+      setCategoryId("");
       setTimeout(() => {
-        router.push("/admin/state");
+        router.push("/admin/category-attribute");
       }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
@@ -183,21 +188,21 @@ const StateCreateForm = () => {
 
           <div>
             <label
-              htmlFor="description"
+              htmlFor="name"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              توضیحات
+              واحد
             </label>
-            <textarea
+            <input
               type="text"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              id="description"
+              id="unit"
+              onChange={(e) => setUnit(e.target.value)}
+              value={unit}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات  "
+              placeholder="واحد"
               required
-            ></textarea>
-            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
+            />
+            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۱۲۰ کاراکتر</p>
           </div>
 
           <div>
@@ -208,58 +213,53 @@ const StateCreateForm = () => {
               وضعیت
             </label>
             <select
-              type="text"
               onChange={(e) => setStatus(e.target.value)}
               value={status}
               id="status"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات  "
               required
             >
               <option value="1">فعال</option>
               <option value="0">غیرفعال</option>
             </select>
-            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
           </div>
 
           <div>
             <label
-              htmlFor="icon"
+              htmlFor="type"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              آیکون
-            </label>
-            <input
-              type="text"
-              onChange={(e) => setIcon(e.target.value)}
-              value={icon}
-              id="icon"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="آیکون  "
-              required
-            />
-            <p className="mt-1 text-xs text-gray-500">کلاس fontawesome</p>
-          </div>
-
-          <div>
-            <label
-              htmlFor="parent_id"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              منطقه پدر
+              نوع
             </label>
             <select
-              type="text"
-              onChange={(e) => setParentId(e.target.value)}
-              value={parentId || ""}
-              id="parent_id"
+              onChange={(e) => setType(e.target.value)}
+              value={type}
+              id="type"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
               required
             >
-              <option value="">منطقه اصلی</option>
-              {states.map((singleState) => (
-                <option key={singleState.id} value={singleState.id}>
-                  {singleState.name}
+              <option value="1">فعال</option>
+              <option value="0">غیرفعال</option>
+            </select>
+          </div>
+
+          <div className="w-full">
+            <label
+              htmlFor="category_id"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              دسته بندی
+            </label>
+            <select
+              onChange={(e) => setCategoryId(e.target.value)}
+              value={categoryId || ""}
+              id="category_id"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
+              required
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
                 </option>
               ))}
             </select>
@@ -291,4 +291,4 @@ const StateCreateForm = () => {
   );
 };
 
-export default StateCreateForm;
+export default CategoryAttributeCreateForm;
