@@ -1,9 +1,9 @@
 import React from "react";
-import StateEditForm from "./StateEditForm";
+import CategoryAttributeEditForm from "./CategoryAttributeEditForm";
 
-async function getState(id) {
+async function getCategoryAttribute(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category-attribute/${id}`,
     {
       method: "GET",
       headers: {
@@ -16,9 +16,9 @@ async function getState(id) {
   return res.json();
 }
 
-async function getStates() {
+async function getCategories() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category`,
     {
       method: "GET",
       headers: {
@@ -33,16 +33,19 @@ async function getStates() {
   return response.json();
 }
 
-const StateEditPage = async ({ params }) => {
+const CategoryAttributeEditPage = async ({ params }) => {
   let { id } = await params;
-  const state = await getState(id);
-  const states = await getStates();
+  const categoryAttribute = await getCategoryAttribute(id);
+  const categories = await getCategories();
   return (
     <div className="w-full p-4">
-      <h1 className="text-2xl mb-4">ویرایش منطقه </h1>
-      <StateEditForm state={state.data} states={states.data} />
+      <h1 className="text-2xl mb-4">ویرایش ویژگی </h1>
+      <CategoryAttributeEditForm
+        categoryAttribute={categoryAttribute.data}
+        categories={categories.data}
+      />
     </div>
   );
 };
 
-export default StateEditPage;
+export default CategoryAttributeEditPage;

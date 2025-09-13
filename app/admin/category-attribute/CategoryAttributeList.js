@@ -48,7 +48,7 @@ const CategoryAttributeList = ({ categoryAttributes }) => {
         ?.split("=")[1];
       if (token) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category-attribute/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -91,7 +91,7 @@ const CategoryAttributeList = ({ categoryAttributes }) => {
         </thead>
 
         <tbody>
-          {categoryAttributes.data.map((categoryAttribute) => {
+          {categoryAttributes?.data.map((categoryAttribute) => {
             return (
               <tr key={categoryAttribute.id} className="hover:bg-gray-50">
                 <td className="border px-4 py-2 text-right">
@@ -117,7 +117,7 @@ const CategoryAttributeList = ({ categoryAttributes }) => {
                 </td>
                 <td className="border px-4 py-2 text-right">
                   <Link
-                    href={`/admin/state/edit/${categoryAttribute.id}`}
+                    href={`/admin/category-attribute/edit/${categoryAttribute.id}`}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2"
                   >
                     <i className="fa fa-edit"></i>

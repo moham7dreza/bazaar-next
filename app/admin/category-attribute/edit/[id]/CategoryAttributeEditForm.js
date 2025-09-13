@@ -2,12 +2,14 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const StateEditForm = ({ state, states }) => {
-  const [name, setName] = useState(state.name);
-  const [description, setDescription] = useState(state.description);
-  const [status, setStatus] = useState(state.status.toString());
-  const [icon, setIcon] = useState(state.icon || "");
-  const [parentId, setParentId] = useState(state.parent_id || null);
+const CategoryAttributeEditForm = ({ categoryAttribute, categories }) => {
+  const [name, setName] = useState(categoryAttribute.name || "");
+  const [unit, setUnit] = useState(categoryAttribute.unit || "");
+  const [categoryId, setCategoryId] = useState(
+    categoryAttribute.category ? categoryAttribute.category.id.toString() : ""
+  );
+  const [type, setType] = useState(categoryAttribute.type || "0");
+  const [status, setStatus] = useState(categoryAttribute.status || "0");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -46,18 +48,23 @@ const StateEditForm = ({ state, states }) => {
       setError("نام باید بین ۲ تا ۱۲۰ کاراکتر باشد");
       return false;
     }
-    if (description.length < 2 || description.length > 500) {
-      setError("توضیحات باید بین ۲ تا ۵۰۰ کاراکتر باشد");
+    if (unit.length < 2 || unit.length > 120) {
+      setError("واحد باید بین ۲ تا ۱۲۰ کاراکتر باشد");
       return false;
     }
     if (status !== "0" && status !== "1") {
       setError("وضعیت باید یکی از مقادیر ۰ یا ۱ باشد");
       return false;
     }
-    if (icon.length < 1 || icon.length > 120) {
-      setError("آیکون باید بین ۱ تا ۱۲۰ کاراکتر باشد");
+    if (type !== "0" && type !== "1") {
+      setError("نوع باید یکی از مقادیر ۰ یا ۱ باشد");
       return false;
     }
+    if (!categoryId) {
+      setError("انتخاب دسته بندی اجباری است");
+      return false;
+    }
+
     return true;
   };
 
@@ -78,15 +85,15 @@ const StateEditForm = ({ state, states }) => {
 
     const dataToSend = {
       name,
-      description,
-      status,
-      icon,
-      parent_id: parentId ? parseInt(parentId) : null,
+      unit,
+      category_id: parseInt(categoryId),
+      type,
+      status: status,
     };
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state/${state.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category-attribute/${categoryAttribute.id}`,
         {
           method: "PUT",
           headers: {
@@ -115,18 +122,16 @@ const StateEditForm = ({ state, states }) => {
         throw new Error("خطایی رخ داده است");
       }
 
-      setSuccess("منطقه با موفقیت ویرایش شد");
+      setSuccess("ویژگی با موفقیت ویرایش شد");
       setName("");
-      setDescription("");
-      setStatus("1");
-      setIcon("");
-      setParentId(null);
+      setType("0");
+      setStatus("0");
+      setUnit("");
       setTimeout(() => {
-        router.push("/admin/state");
+        router.push("/admin/category-attribute");
       }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
-      // console.log("خطا", error.message);
     } finally {
       setLoading(false);
     }
@@ -157,21 +162,21 @@ const StateEditForm = ({ state, states }) => {
 
           <div>
             <label
-              htmlFor="description"
+              htmlFor="name"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              توضیحات
+              واحد
             </label>
-            <textarea
+            <input
               type="text"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              id="description"
+              id="unit"
+              onChange={(e) => setUnit(e.target.value)}
+              value={unit}
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات دسته بندی"
+              placeholder="واحد"
               required
-            ></textarea>
-            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
+            />
+            <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۱۲۰ کاراکتر</p>
           </div>
 
           <div>
@@ -182,12 +187,10 @@ const StateEditForm = ({ state, states }) => {
               وضعیت
             </label>
             <select
-              type="text"
               onChange={(e) => setStatus(e.target.value)}
               value={status}
               id="status"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات دسته بندی"
               required
             >
               <option value="1">فعال</option>
@@ -196,52 +199,45 @@ const StateEditForm = ({ state, states }) => {
             <p className="mt-1 text-xs text-gray-500">بین ۲ تا ۵۰۰ کاراکتر</p>
           </div>
 
-          <div className="flex">
-            <div className="w-1/2">
-              <label
-                htmlFor="icon"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                آیکون
-              </label>
-              <input
-                type="text"
-                onChange={(e) => setIcon(e.target.value)}
-                value={icon}
-                id="icon"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-                placeholder="توضیحات دسته بندی"
-                required
-              />
-              <p className="mt-1 text-xs text-gray-500">کلاس fontawesome</p>
-            </div>
+          <div>
+            <label
+              htmlFor="type"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              نوع
+            </label>
+            <select
+              onChange={(e) => setType(e.target.value)}
+              value={type}
+              id="type"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
+              required
+            >
+              <option value="1">فعال</option>
+              <option value="0">غیرفعال</option>
+            </select>
+          </div>
 
-            <div className="w-1/2">
-              <label
-                htmlFor="parent_id"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                منطقه پدر
-              </label>
-              <select
-                type="text"
-                onChange={(e) => setParentId(e.target.value)}
-                value={parentId || ""}
-                id="parent_id"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-                placeholder="توضیحات دسته بندی"
-                required
-              >
-                <option value="">منطقه اصلی</option>
-                {states
-                  .filter((cat) => cat.id !== state.id)
-                  .map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
+          <div className="w-full">
+            <label
+              htmlFor="parent_id"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              دسته بندی
+            </label>
+            <select
+              onChange={(e) => setCategoryId(e.target.value)}
+              value={categoryId}
+              id="category_id"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
+              required
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id.toString()}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -270,4 +266,4 @@ const StateEditForm = ({ state, states }) => {
   );
 };
 
-export default StateEditForm;
+export default CategoryAttributeEditForm;
