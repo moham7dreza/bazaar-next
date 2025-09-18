@@ -3,7 +3,7 @@ import StateEditForm from "./StateEditForm";
 
 async function getState(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state/${id}`,
     {
       method: "GET",
       headers: {
@@ -18,7 +18,7 @@ async function getState(id) {
 
 async function getStates() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/state`,
     {
       method: "GET",
       headers: {

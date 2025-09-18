@@ -3,7 +3,7 @@ import CategoryEditForm from "./CategoryEditForm";
 
 async function getCategory(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category/${id}`,
     {
       method: "GET",
       headers: {
@@ -18,7 +18,7 @@ async function getCategory(id) {
 
 async function getCategroies() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/category`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/category`,
     {
       method: "GET",
       headers: {
