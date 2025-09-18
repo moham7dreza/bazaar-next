@@ -47,6 +47,13 @@ const Sidebar = () => {
         <span>ویژگی دسته ها</span>
       </Link>
         <Link
+        href="/admin/category-value"
+        className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+      >
+        <i className="fa fa-map"></i>
+        <span>مقادیر ویژگی دسته ها</span>
+      </Link>
+        <Link
         href="/admin/user"
         className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
       >
