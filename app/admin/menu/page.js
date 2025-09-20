@@ -5,7 +5,33 @@ import MenuList from "@/app/admin/menu/MenuList";
 
 const MenuPage = async () => {
 
-    const result = await apiGet('/api/admin/content/menu');
+    // const result = await apiGet('/api/admin/content/menu');
+
+    let menus;
+
+    try {
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/admin/content/menu`,
+            {
+                headers: {
+                    Accept: "application/json",
+                },
+                cache: "no-store",
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error("خطا در دریافت اطلاعات");
+        }
+
+        menus = await res.json();
+
+        if (!menus.status) {
+            throw new Error("خطا در دریافت اطلاعات");
+        }
+    } catch (err) {
+        console.log(err);
+    }
 
     return (
         <div className="w-full p-4">
@@ -20,7 +46,7 @@ const MenuPage = async () => {
                 </Link>
             </div>
 
-            <MenuList menus={result}/>
+            <MenuList menus={menus}/>
         </div>
     );
 };
