@@ -93,7 +93,7 @@ const StateList = ({ states }) => {
         </thead>
 
         <tbody>
-          {states.data.map((state) => {
+          {states?.data.map((state) => {
             return (
               <tr key={state.id} className="hover:bg-gray-50">
                 <td className="border px-4 py-2 text-right">{state.id}</td>

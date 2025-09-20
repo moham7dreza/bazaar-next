@@ -88,7 +88,7 @@ const PageList = ({ pages }) => {
         </thead>
 
         <tbody>
-          {pages.data.map((page) => {
+          {pages?.data.map((page) => {
             return (
               <tr key={page.id} className="hover:bg-gray-50">
                 <td className="border px-4 py-2 text-right">{page.id}</td>

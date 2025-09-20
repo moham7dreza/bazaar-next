@@ -89,7 +89,7 @@ const UserList = ({ users }) => {
         </thead>
 
         <tbody>
-          {users.data.map((user) => {
+          {users?.data.map((user) => {
             return (
               <tr key={user.id} className="hover:bg-gray-50">
                 <td className="border px-4 py-2 text-right">{user.id}</td>
