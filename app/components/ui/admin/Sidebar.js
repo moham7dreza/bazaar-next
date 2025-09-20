@@ -12,6 +12,13 @@ const Sidebar = () => {
         <span>داشبورد</span>
       </Link>
       <Link
+        href="/admin/ads"
+        className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+      >
+        <i className="fa fa-ra"></i>
+        <span>آگهی ها</span>
+      </Link>
+        <Link
         href="/admin/category"
         className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
       >
