@@ -278,12 +278,10 @@ const StateCreateForm = () => {
               وضعیت
             </label>
             <select
-              type="text"
               onChange={(e) => setStatus(e.target.value)}
               value={status}
               id="status"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="توضیحات  "
               required
             >
               <option value="1">فعال</option>
@@ -309,16 +307,15 @@ const StateCreateForm = () => {
           </div>{" "}
           <div>
             <label
-              htmlFor="ads_type"
+              htmlFor="is_special"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               ویژه
             </label>
             <select
-              type="text"
               onChange={(e) => setIsSpecial(e.target.value)}
               value={isSpecial}
-              id="isSpecial"
+              id="is_special"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
               required
             >
@@ -328,16 +325,15 @@ const StateCreateForm = () => {
           </div>{" "}
           <div>
             <label
-              htmlFor="willingToTrade"
+              htmlFor="willing_to_trade"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               مایل به معاوضه
             </label>
             <select
-              type="text"
               onChange={(e) => setWillingToTrade(e.target.value)}
               value={willingToTrade}
-              id="willingToTrade"
+              id="willing_to_trade"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
               required
             >
@@ -347,18 +343,16 @@ const StateCreateForm = () => {
           </div>{" "}
           <div>
             <label
-              htmlFor="ads_type"
+              htmlFor="ads_status"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               وضعیت آگهی
             </label>
             <select
-              type="text"
               onChange={(e) => setAdsStatus(e.target.value)}
               value={adsStatus}
               id="ads_status"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="نوع آگهی"
               required
             >
               <option value="as_good_as_new">درحد نو</option>
@@ -368,22 +362,20 @@ const StateCreateForm = () => {
           </div>
           <div>
             <label
-              htmlFor="categoryId"
+              htmlFor="category_id"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               دسته بندی
             </label>
             <select
-              type="text"
               onChange={(e) => setCategoryId(e.target.value)}
               value={categoryId}
-              id="categoryId"
+              id="category_id"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="دسته بندی"
               required
             >
               <option value="">انتخاب کنید</option>
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
@@ -398,16 +390,14 @@ const StateCreateForm = () => {
               شهر
             </label>
             <select
-              type="text"
               onChange={(e) => setCityId(e.target.value)}
               value={cityId}
               id="cityId"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="شهر"
               required
             >
               <option value="">انتخاب کنید</option>
-              {cities.map((city, index) => (
+              {cities?.map((city, index) => (
                 <option key={index} value={city.id}>
                   {city.name}
                 </option>
@@ -416,22 +406,20 @@ const StateCreateForm = () => {
           </div>{" "}
           <div>
             <label
-              htmlFor="userId"
+              htmlFor="user_id"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               کاربر
             </label>
             <select
-              type="text"
               onChange={(e) => setUserId(e.target.value)}
               value={userId}
-              id="userId"
+              id="user_id"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              placeholder="کاربر"
               required
             >
               <option value="">انتخاب کنید</option>
-              {users.map((user) => (
+              {users?.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.email}
                 </option>
@@ -440,14 +428,14 @@ const StateCreateForm = () => {
           </div>{" "}
           <div>
             <label
-              htmlFor="publishedAt"
+              htmlFor="published_at"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               تاریخ انتشار
             </label>
             <input
               type="date"
-              id="publishedAt"
+              id="published_at"
               value={publishedAt}
               onChange={(e) => setPublishedAt(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md"
@@ -455,14 +443,14 @@ const StateCreateForm = () => {
           </div>
           <div>
             <label
-              htmlFor="publishedAt"
+              htmlFor="expired_at"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               تاریخ انقضا
             </label>
             <input
               type="date"
-              id="expiredAt"
+              id="expired_at"
               value={expiredAt}
               onChange={(e) => setExpiredAt(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md"
