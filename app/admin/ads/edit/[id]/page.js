@@ -1,9 +1,9 @@
 import React from "react";
-import StateEditForm from "./StateEditForm";
+import AdEditForm from "./AdEditForm";
 
-async function getState(id) {
+async function getAd(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertisements/advertisement/${id}`,
     {
       method: "GET",
       headers: {
@@ -16,33 +16,15 @@ async function getState(id) {
   return res.json();
 }
 
-async function getStates() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/advertise/state`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      cache: "force-cache",
-    }
-  );
-  if (!response.ok) throw new Error("خطایی در دریافت اطلاعات");
-
-  return response.json();
-}
-
-const StateEditPage = async ({ params }) => {
+const AdEditPage = async ({ params }) => {
   let { id } = await params;
-  const state = await getState(id);
-  const states = await getStates();
+  const ad = await getAd(id);
   return (
     <div className="w-full p-4">
-      <h1 className="text-2xl mb-4">ویرایش منطقه </h1>
-      <StateEditForm state={state.data} states={states.data} />
+      <h1 className="text-2xl mb-4">ویرایش آگهی</h1>
+      <AdEditForm ad={ad.data} />
     </div>
   );
 };
 
-export default StateEditPage;
+export default AdEditPage;
