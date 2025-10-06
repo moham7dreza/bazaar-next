@@ -112,6 +112,12 @@ const AdsList = ({ ads }) => {
                   >
                     <i className="fa fa-eye"></i>
                   </Link>
+                    <Link
+                    href={`/admin/ads/${ad.id}/gallery`}
+                    className="bg-green-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mx-2"
+                  >
+                    <i className="fa fa-photo"></i>
+                  </Link>
                 </td>
               </tr>
             );
