@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import CategoryList from "@/app/components/ui/home/CategoryList";
+import StateList from "@/app/components/ui/home/StateList";
 
 const Sidebar = () => {
   return (
@@ -11,55 +12,16 @@ const Sidebar = () => {
         </header>
         <CategoryList/>
       </section>
-
-      <section className="border-t mt-6 pt-6 w-3/4">
-        <div id="accordionExample">
-          <div>
-            <h2 className="mb-0" id="headingTwo">
-              <button
-                className="group relative flex  space-x-3 space-x-reverse"
-                type="button"
-                data-te-collapse-init
-                data-te-collapse-collapsed
-                data-te-target="#collapseTwo"
-                aria-expanded="false"
-                aria-controls="collapseTwo"
-              >
-                <span className="-mr-1 ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:mr-0 group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="h-6 w-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                    />
-                  </svg>
-                </span>
-                <p>محل</p>
-              </button>
-            </h2>
-            <div
-              id="collapseTwo"
-              className="!visible hidden"
-              data-te-collapse-item
-              aria-labelledby="headingTwo"
-              data-te-parent="#accordionExample"
-            >
-              <div className="py-4">
-                <button className="border w-full text-start py-2 ps-2 text-gray-400 rounded text-sm">
-                  تعیین محل
-                </button>
-              </div>
+        <section className="border-t mt-6 pt-6 w-3/4">
+            <div>
+                <h2 className='mb-3'>
+                    <p className='font-light text-sm'>محله</p>
+                </h2>
+                <div className='py-2'>
+                    <StateList/>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
       <section className="border-t mt-6 pt-6 w-3/4">
         <div id="accordionExample1">
