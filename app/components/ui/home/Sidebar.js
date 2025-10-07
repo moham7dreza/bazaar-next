@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import CategoryList from "@/app/components/ui/home/CategoryList";
 
 const Sidebar = () => {
   return (
@@ -8,54 +9,7 @@ const Sidebar = () => {
         <header className="mb-3">
           <h5 className="font-light text-sm">دسته ها</h5>
         </header>
-        <section className="space-y-5">
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-home"></i>
-            <p>املاک</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-car"></i>
-            <p>وسیله نقلیه</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-tablet text-2xl"></i>
-            <p>کالای دیجیتال</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-diamond"></i>
-            <p>خانه و آشپزخانه</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-magic"></i>
-            <p>خدمات</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-clock-o"></i>
-            <p>وسایل شخصی</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-inbox"></i>
-            <p>سرگرمی و فراغت</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-user-secret"></i>
-            <p>اجتماعی</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-microphone"></i>
-            <p>تجهیزات و صنعتی</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-shopping-bag"></i>
-            <p>استخدام و کاریابی</p>
-          </div>
-          <div className="flex items-center space-x-reverse space-x-2 text-gray-600">
-            <i className="fa fa-user-plus"></i>
-            <p>
-              رزومه کارجویان <span className="text-red-700 text-sm">(جدید)</span>
-            </p>
-          </div>
-        </section>
+        <CategoryList/>
       </section>
 
       <section className="border-t mt-6 pt-6 w-3/4">
