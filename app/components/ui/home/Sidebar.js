@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import CategoryList from "@/app/components/ui/home/CategoryList";
 import StateList from "@/app/components/ui/home/StateList";
+import MenuList from "@/app/components/ui/home/MenuList";
 
 const Sidebar = () => {
   return (
@@ -182,35 +183,7 @@ const Sidebar = () => {
       </section>
 
       <footer className="border-t w-3/4 mt-7 pt-5">
-        <section>
-          <ul className="flex flex-wrap space-x-4 space-x-reverse  space-y-4 space-y-reverse">
-            <li>
-              <a href="" className="text-sm text-gray-500">
-                درباره دیوار
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-sm text-gray-500">
-                دریافت برنامه
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-sm text-gray-500">
-                اتاق خبر
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-sm text-gray-500">
-                کسب و کار ها
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-sm text-gray-500">
-                پشتیبانی و قوانین
-              </a>
-            </li>
-          </ul>
-        </section>
+        <MenuList/>
 
         <section className="flex justify-center w-3/4 mt-5 space-x-7 space-x-reverse">
           <div>
