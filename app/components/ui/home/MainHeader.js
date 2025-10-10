@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import CityList from "@/app/components/ui/home/CityList";
+import CategoryHeader from "@/app/components/ui/home/CategoryHeader";
 
 const MainHeader = () => {
   return (
@@ -48,10 +49,7 @@ const MainHeader = () => {
         </section>
 
         <section className="hidden lg:flex text-gray-500">
-          <button className="flex justify-center items-center space-x-3 space-x-reverse">
-            <p>دسته ها</p>
-            <i className="fa fa-angle-down text-xl text-gray-500"></i>
-          </button>
+            <CategoryHeader/>
         </section>
 
         <section className="container mx-4 lg:mx-0 lg:w-2/6 flex justify-center items-center bg-gray-100 rounded-sm">
