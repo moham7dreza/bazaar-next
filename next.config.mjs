@@ -6,8 +6,11 @@ const nextConfig = {
                 protocol: 'http',
                 hostname: 'localhost',
                 port: '9000',
-                pathname: '/images/uploads/**'
-            }
+            },
+            {
+                protocol: 'https',
+                hostname: 'via.placeholder.com',
+            },
         ]
     }
 };
