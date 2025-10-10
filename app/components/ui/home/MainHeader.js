@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import CityList from "@/app/components/ui/home/CityList";
 
 const MainHeader = () => {
   return (
@@ -43,10 +44,7 @@ const MainHeader = () => {
         </section>
 
         <section className="hidden lg:flex text-gray-500">
-          <button className="flex justify-center items-center space-x-3 space-x-reverse">
-            <i className="fa fa-map-marker text-xl text-gray-500"></i>
-            <p>تهران</p>
-          </button>
+          <CityList/>
         </section>
 
         <section className="hidden lg:flex text-gray-500">
