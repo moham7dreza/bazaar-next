@@ -2,7 +2,6 @@
 import React from 'react';
 
 const CategoryModal = ({categories}) => {
-    console.log(categories);
     const [showModal, setShowModal] = React.useState(false);
     // use selected category
     const [selectedCategory, setSelectedCategory] = React.useState('انتخاب دسته بندی');
@@ -62,7 +61,7 @@ const CategoryModal = ({categories}) => {
                                                                     }
                                                                     return null;
                                                                 } catch (e) {
-                                                                    console.log(e)
+                                                                    console.error(e)
                                                                 }
                                                             }
                                                         )}

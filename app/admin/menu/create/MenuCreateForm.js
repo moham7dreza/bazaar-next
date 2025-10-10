@@ -39,7 +39,7 @@ const MenuCreateForm = () => {
         }
       } catch (err) {
         setError(`خطایی در دریافت CSRF`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCsrfToken();
@@ -63,7 +63,7 @@ const MenuCreateForm = () => {
         setMenus(result.data);
       } catch (err) {
         setError(`خطایی در دریافت منو ها`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchMenus();

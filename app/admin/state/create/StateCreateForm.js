@@ -36,7 +36,7 @@ const StateCreateForm = () => {
         }
       } catch (err) {
         setError(`خطایی در دریافت CSRF`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCsrfToken();
@@ -60,7 +60,7 @@ const StateCreateForm = () => {
         setStates(result.data);
       } catch (err) {
         setError(`خطایی در دریافت مناطق`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchStates();
@@ -152,7 +152,7 @@ const StateCreateForm = () => {
       }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
-      // console.log("خطا", error.message);
+      // console.error("خطا", error.message);
     } finally {
       setLoading(false);
     }

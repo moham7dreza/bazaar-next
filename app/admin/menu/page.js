@@ -30,7 +30,7 @@ const MenuPage = async () => {
             throw new Error("خطا در دریافت اطلاعات");
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 
     return (

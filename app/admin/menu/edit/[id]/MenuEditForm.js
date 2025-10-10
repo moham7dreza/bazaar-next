@@ -38,7 +38,7 @@ const MenuEditForm = ({menu, menus}) => {
         }
       } catch (err) {
         setError(`خطایی در دریافت CSRF`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCsrfToken();
@@ -136,7 +136,7 @@ const MenuEditForm = ({menu, menus}) => {
       }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
-      // console.log("خطا", error.message);
+      // console.error("خطا", error.message);
     } finally {
       setLoading(false);
     }

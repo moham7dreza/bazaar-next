@@ -36,7 +36,7 @@ const CategoryCreateForm = () => {
         }
       } catch (err) {
         setError(`خطایی در دریافت CSRF`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCsrfToken();
@@ -60,7 +60,7 @@ const CategoryCreateForm = () => {
         setCategories(result.data);
       } catch (err) {
         setError(`خطایی در دریافت دسته بندی ها`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCategories();

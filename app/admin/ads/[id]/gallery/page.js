@@ -27,7 +27,7 @@ const GalleryPage = async ({ params }) => {
       throw new Error("خطا در دریافت اطلاعات");
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
   return (
     <div className="w-full p-4">

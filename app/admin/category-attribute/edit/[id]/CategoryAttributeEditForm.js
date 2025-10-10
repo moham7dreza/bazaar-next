@@ -37,7 +37,7 @@ const CategoryAttributeEditForm = ({ categoryAttribute, categories }) => {
         }
       } catch (err) {
         setError(`خطایی در دریافت CSRF`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCsrfToken();

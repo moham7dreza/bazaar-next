@@ -35,7 +35,7 @@ const CategoryValueCreateForm = () => {
         }
       } catch (err) {
         setError(`خطایی در دریافت CSRF`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCsrfToken();
@@ -59,7 +59,7 @@ const CategoryValueCreateForm = () => {
         setCategoryAttributes(result.data);
       } catch (err) {
         setError(`خطایی در دریافت مناطق`);
-        console.log("خطا", err.message);
+        console.error("خطا", err.message);
       }
     };
     fetchCategoryAttributes();
@@ -147,7 +147,7 @@ const CategoryValueCreateForm = () => {
       }, 1000);
     } catch (error) {
       setError(error.message || "خطا در ارسال اطلاعات");
-      // console.log("خطا", error.message);
+      // console.error("خطا", error.message);
     } finally {
       setLoading(false);
     }
