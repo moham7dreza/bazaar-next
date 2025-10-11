@@ -1,15 +1,36 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
-const Ads = () => {
+async function getAdvertisement(id) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/advertisements/${id}`)
+    return await res.json();
+}
+
+const Ads = async ({params}) => {
+    const {id} = await params;
+    const {data: ad} = await getAdvertisement(id);
+    const converterToJalali = (date) => {
+        const options = {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            calendar: "persian",
+        };
+
+        return new Date(date).toLocaleTimeString("fa-IR", options);
+    };
+
   return (
     <main className="container mb-20 lg:mb-5 lg:px-40">
       <section className="lg:flex">
         <section className="px-4 pt-12 lg:w-1/2 lg:order-2">
           <div>
             <Image
-              src={"/images/1.jpg"}
-              alt="ads-img"
+              src={`${process.env.NEXT_PUBLIC_API_URL}/${ad.image.indexArray.medium}`}
+              alt={ad.title}
               className="rounded"
               width={700}
               height={300}
@@ -36,16 +57,16 @@ const Ads = () => {
               <i className="fa fa-angle-right"></i>
             </div>
             <div>
-              <h6>مبلمان اداری</h6>
+              <h6>{ad.category?.name}</h6>
             </div>
           </section>
 
           <section className="px-4">
             <div className="text-2xl">
-              <h2>مبلمان اداری فروش</h2>
+              <h2>{ad.title}</h2>
             </div>
             <div className="text-gray-500 text-sm mt-2">
-              <h6>دقایقی پیش در جمهوری</h6>
+              <h6>{converterToJalali(ad.created_at)}</h6>
             </div>
           </section>
 
@@ -89,26 +110,26 @@ const Ads = () => {
           <section className="px-2 flex divide-x-2 divide-x-reverse justify-center items-start flex-wrap space-y-4 space-y-reverse">
             <div className="flex flex-col justify-center items-center w-1/3">
               <div>
-                <h6>کارکرد</h6>
+                <h6>وضعیت</h6>
               </div>
               <div>
-                <h3 className="font-extrabold">200,000</h3>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center items-center w-1/3">
-              <div>
-                <h6>کارکرد</h6>
-              </div>
-              <div>
-                <h3 className="font-extrabold">200,000</h3>
+                <h3 className="font-extrabold">{ad.ads_status}</h3>
               </div>
             </div>
             <div className="flex flex-col justify-center items-center w-1/3">
               <div>
-                <h6>کارکرد</h6>
+                <h6>نوع</h6>
               </div>
               <div>
-                <h3 className="font-extrabold">200,000</h3>
+                <h3 className="font-extrabold">{ad.ads_type}</h3>
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center w-1/3">
+              <div>
+                <h6>ویژه</h6>
+              </div>
+              <div>
+                <h3 className="font-extrabold">{ad.is_special ? 'ویژه' : 'عادی'}</h3>
               </div>
             </div>
           </section>
@@ -150,26 +171,15 @@ const Ads = () => {
 
           <section className="p-5">
             <h4 className="text-xl mb-2">توضیحات</h4>
-            <p>
-              لیفان ۸۲۰مدل ۹۷
-              <br />
-              بی رنگ و ضربه
-              <br />
-              کف خواب اسپرت
-              <br />
-              رینگ ۸۰ میلیونی
-              <br />
-              بوق ۲۰ میلیونی
-              <br />
-              بیمه بدنه دارد
-              <br />
-              خیلی لاکچری در حد صفر
-            </p>
+            <p>{ad.description}</p>
           </section>
 
           <section className="p-5 flex space-x-4 space-x-reverse flex-wrap">
-            <a className="bg-gray-100 text-gray-500 px-4 py-1">سواری و وانت</a>
-            <a className="bg-gray-100 text-gray-500 px-4 py-1">سواری و وانت</a>
+              {
+                  ad.tags?.split(',').map((tag, index) => (
+                      <Link key={index} className="bg-gray-100 text-gray-500 px-4 py-1 m-1" href={'/'}>{tag}</Link>
+                  ))
+              }
           </section>
         </section>
       </section>
