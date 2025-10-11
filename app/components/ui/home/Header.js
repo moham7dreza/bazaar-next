@@ -6,13 +6,15 @@ const Header = () => {
   return (
     <header>
       <section className="container flex justify-center items-center">
-        <Image
-          src="/images/logo.png"
-          width={50}
-          height={50}
-          className="w-24 h-24"
-          alt="logo"
-        />
+        <Link href="/">
+            <Image
+                src="/images/logo.png"
+                width={50}
+                height={50}
+                className="w-24 h-24"
+                alt="logo"
+            />
+        </Link>
       </section>
 
       <section className="border-b">

@@ -35,13 +35,15 @@ const MainHeader = () => {
       </header>
       <header className="flex justify-center items-center border-b-2 pb-4 pt-3 lg:space-x-8 lg:space-x-reverse xl:space-x-12 xl:space-x-reverse">
         <section className="hidden lg:flex">
-          <Image
-            className="w-14 h-14"
-            src={"/images/logo.png"}
-            alt="logo"
-            width={60}
-            height={60}
-          />
+          <Link href={'/'}>
+              <Image
+                  className="w-14 h-14"
+                  src={"/images/logo.png"}
+                  alt="logo"
+                  width={60}
+                  height={60}
+              />
+          </Link>
         </section>
 
         <section className="hidden lg:flex text-gray-500">
