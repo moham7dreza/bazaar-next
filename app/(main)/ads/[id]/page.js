@@ -7,9 +7,16 @@ async function getAdvertisement(id) {
     return await res.json();
 }
 
+async function getAdvertisementGallery(id) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/advertisements/${id}/gallery`)
+    return await res.json();
+}
+
 const Ads = async ({params}) => {
     const {id} = await params;
     const {data: ad} = await getAdvertisement(id);
+    const {data: gallery} = await getAdvertisementGallery(id);
+
     const converterToJalali = (date) => {
         const options = {
             year: "numeric",
@@ -35,6 +42,20 @@ const Ads = async ({params}) => {
               width={700}
               height={300}
             />
+              <div className="flex flex-wrap gap-2 mt-4 justify-center items-center">
+                  {
+                      gallery?.map((image, index) => (
+                          <Image
+                              src={`${process.env.NEXT_PUBLIC_API_URL}/${image.url.indexArray.medium}`}
+                              alt={ad.title}
+                              className="rounded"
+                              width={100}
+                              height={100}
+                              key={index}
+                          />
+                      ))
+                  }
+              </div>
           </div>
           <div className="hidden lg:block">
             <textarea
