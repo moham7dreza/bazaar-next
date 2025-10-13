@@ -30,7 +30,65 @@ const StateCreateForm = () => {
   const [categories, setCategories] = useState([]);
   const [cities, setCities] = useState([]);
   const [users, setUsers] = useState([]);
+  // advertisement category attributes and values
+  const [categoryAttributes, setCategoryAttributes] = useState([]);
+  const [attributeValues, setAttributeValues] = useState({});
+  const [selectedAttributeValues, setSelectedAttributeValues] = useState({});
   const router = useRouter();
+
+    useEffect(() => {
+        let ignore = false
+        setCategoryAttributes([])
+        setAttributeValues({})
+        setSelectedAttributeValues({})
+
+        if (! categoryId) return
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/advertisements/category/${categoryId}/attributes`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    }
+                );
+                const result = await response.json();
+                const attributes = result.data;
+
+                if (ignore) return
+                setCategoryAttributes(attributes);
+
+                if (attributes.length === 0) return
+
+                const values = {}
+
+                await Promise.all(attributes.map(async (attribute) => {
+                    const response = await fetch(
+                        `${process.env.NEXT_PUBLIC_API_URL}/api/advertisements/category/${attribute.id}/values`,
+                        {
+                            headers: {
+                                "Content-Type": "application/json",
+                            }
+                        }
+                    );
+                    const result = await response.json();
+                    values[attribute.id] = result.data || [];
+                }))
+
+                setAttributeValues(values);
+            } catch (err) {
+                setError(`خطایی در دریافت داده ها`);
+                console.error("خطا", err);
+            }
+        }
+        fetchData()
+        // console.log(categoryAttributes, attributeValues)
+        return () => {
+            ignore = true;
+        }
+    }, [categoryId]);
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
@@ -382,6 +440,40 @@ const StateCreateForm = () => {
               ))}
             </select>
           </div>{" "}
+
+            <div>
+                {
+                    categoryAttributes.length > 0 && categoryAttributes.length === Object.keys(attributeValues).length && (
+                        <>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                ویژگی دسته بندی ها
+                            </label>
+                            {
+                                categoryAttributes.map((attribute) => (
+                                    <div key={attribute.id} className="mb-2">
+                                        <label className="block text-xs mb-1">
+                                            ویژگی : {attribute.name}
+                                        </label>
+                                        <select className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                                            value={attributeValues[attribute.id] || ""}
+                                                onChange={(e) => setSelectedAttributeValues(prev => ({ ...prev, [attribute.id]: e.target.value }))}
+                                        >
+                                            <option value="">مقدار ویژگی را انتخاب کنید</option>
+                                            {
+                                                attributeValues[attribute.id].map((value) => (
+                                                    <option key={value.id} value={value.id}>
+                                                        {value.value}
+                                                    </option>
+                                                ))
+                                            }
+                                        </select>
+                                    </div>
+                                ))
+                            }
+                        </>
+                    )
+                }
+            </div>
           <div>
             <label
               htmlFor="cityId"
