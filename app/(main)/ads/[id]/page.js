@@ -15,6 +15,7 @@ async function getAdvertisementGallery(id) {
 const Ads = async ({params}) => {
     const {id} = await params;
     const {data: ad} = await getAdvertisement(id);
+    console.log(ad)
     const {data: gallery} = await getAdvertisementGallery(id);
 
     const converterToJalali = (date) => {
@@ -29,6 +30,17 @@ const Ads = async ({params}) => {
 
         return new Date(date).toLocaleTimeString("fa-IR", options);
     };
+
+    const InfoRow = ({label, value}) => (
+        <section className="px-2 flex justify-between border-t w-11/12 mx-auto py-3 border-b">
+            <div>
+                <h4 className="text-gray-500">{label}</h4>
+            </div>
+            <div>
+                <h4>{value}</h4>
+            </div>
+        </section>
+    )
 
   return (
     <main className="container mb-20 lg:mb-5 lg:px-40">
@@ -156,38 +168,14 @@ const Ads = async ({params}) => {
           </section>
 
           <section>
-            <section className="px-2 flex justify-between border-t w-11/12 mx-auto py-3 border-b">
-              <div>
-                <h4 className="text-gray-500">نوع سوخت</h4>
-              </div>
-              <div>
-                <h4>بنزینی</h4>
-              </div>
-            </section>
-            <section className="px-2 flex justify-between w-11/12 mx-auto py-3 border-b">
-              <div>
-                <h4 className="text-gray-500">نوع سوخت</h4>
-              </div>
-              <div>
-                <h4>بنزینی</h4>
-              </div>
-            </section>
-            <section className="px-2 flex justify-between w-11/12 mx-auto py-3 border-b">
-              <div>
-                <h4 className="text-gray-500">نوع سوخت</h4>
-              </div>
-              <div>
-                <h4>بنزینی</h4>
-              </div>
-            </section>
-            <section className="px-2 flex justify-between w-11/12 mx-auto py-3 border-b">
-              <div>
-                <h4 className="text-gray-500">نوع سوخت</h4>
-              </div>
-              <div>
-                <h4>بنزینی</h4>
-              </div>
-            </section>
+              <InfoRow label="قیمت" value={parseFloat(ad.price).toLocaleString('fa') + ' تومان' || 'توافقی'}/>
+              <InfoRow label="وضعیت" value={ad.ad_status || "-"}/>
+              <InfoRow label="شهر" value={ad.city.name || "-"}/>
+              {
+                  ad?.category_attributes_with_values.map((attribute, index) => (
+                      <InfoRow key={index} label={attribute.name} value={attribute.value} />
+                  ))
+              }
           </section>
 
           <section className="p-5">
