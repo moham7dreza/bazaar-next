@@ -79,6 +79,14 @@ const Sidebar = () => {
             <span>بکند</span>
         </a>
         <a
+            href="/"
+            className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+            target="_blank"
+        >
+            <i className="fa fa-home"></i>
+            <span>خانه</span>
+        </a>
+        <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/docs/api`}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
             target="_blank"
