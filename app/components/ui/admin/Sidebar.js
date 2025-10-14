@@ -71,7 +71,7 @@ const Sidebar = () => {
         <div className="border border-gray-700"></div>
 
         <a
-            href={`${process.env.NEXT_PUBLIC_API_URL}/`}
+            href={`${process.env.NEXT_PUBLIC_API_URL}/tool`}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
         >
             <i className="fa fa-server"></i>
