@@ -73,6 +73,7 @@ const Sidebar = () => {
         <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/tool`}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+            target="_blank"
         >
             <i className="fa fa-server"></i>
             <span>بکند</span>
@@ -80,6 +81,7 @@ const Sidebar = () => {
         <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/docs/api`}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+            target="_blank"
         >
             <i className="fa fa-book"></i>
             <span>مستندات API</span>
@@ -87,6 +89,7 @@ const Sidebar = () => {
         <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/chatify`}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+            target="_blank"
         >
             <i className="fa fa-telegram"></i>
             <span>چتیفای</span>
@@ -94,6 +97,7 @@ const Sidebar = () => {
         <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/super-admin`}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+            target="_blank"
         >
             <i className="fa fa-user-secret"></i>
             <span>پنل سوپر ادمین</span>
@@ -101,6 +105,7 @@ const Sidebar = () => {
         <a
             href={'https://github.com/moham7dreza'}
             className="text-[var(--text-color)] flex items-center space-x-2 space-x-reverse p-2 hover:bg-[var(--hover-bg)] rounded-md transition-all"
+            target="_blank"
         >
             <i className="fa fa-github"></i>
             <span>گیت هاب</span>
