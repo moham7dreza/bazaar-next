@@ -459,7 +459,7 @@ const StateCreateForm = () => {
                                             ویژگی : {attribute.name}
                                         </label>
                                         <select className="w-full px-4 py-2 border border-gray-300 rounded-md"
-                                            value={attributeValues[attribute.id] || ""}
+                                            value={selectedAttributeValues[attribute.id] || ""}
                                                 onChange={(e) => setSelectedAttributeValues(prev => ({ ...prev, [attribute.id]: e.target.value }))}
                                         >
                                             <option value="">مقدار ویژگی را انتخاب کنید</option>
