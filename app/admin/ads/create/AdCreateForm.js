@@ -367,6 +367,25 @@ const StateCreateForm = () => {
               required
             />
           </div>{" "}
+            <div>
+                <label
+                    htmlFor="ads_status"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                    وضعیت آگهی
+                </label>
+                <select
+                    onChange={(e) => setAdsStatus(e.target.value)}
+                    value={adsStatus}
+                    id="ads_status"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
+                    required
+                >
+                    <option value="as_good_as_new">درحد نو</option>
+                    <option value="used">درحد مورد استفاده</option>
+                    <option value="broken">خراب</option>
+                </select>
+            </div>
           <div>
             <label
               htmlFor="is_special"
@@ -403,25 +422,6 @@ const StateCreateForm = () => {
               <option value="0">خیر</option>
             </select>
           </div>{" "}
-          <div>
-            <label
-              htmlFor="ads_status"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              وضعیت آگهی
-            </label>
-            <select
-              onChange={(e) => setAdsStatus(e.target.value)}
-              value={adsStatus}
-              id="ads_status"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400"
-              required
-            >
-              <option value="as_good_as_new">درحد نو</option>
-              <option value="used">درحد مورد استفاده</option>
-              <option value="broken">خراب</option>
-            </select>
-          </div>
           <div>
             <label
               htmlFor="category_id"
