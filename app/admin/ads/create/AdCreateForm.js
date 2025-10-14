@@ -30,14 +30,15 @@ const StateCreateForm = () => {
   const [categories, setCategories] = useState([]);
   const [cities, setCities] = useState([]);
   const [users, setUsers] = useState([]);
+  const router = useRouter();
   // advertisement category attributes and values
   const [categoryAttributes, setCategoryAttributes] = useState([]);
   const [attributeValues, setAttributeValues] = useState({});
   const [selectedAttributeValues, setSelectedAttributeValues] = useState({});
-  const router = useRouter();
 
     useEffect(() => {
         let ignore = false
+
         setCategoryAttributes([])
         setAttributeValues({})
         setSelectedAttributeValues({})
@@ -50,7 +51,7 @@ const StateCreateForm = () => {
                     `${process.env.NEXT_PUBLIC_API_URL}/api/advertisements/category/${categoryId}/attributes`,
                     {
                         headers: {
-                            "Content-Type": "application/json",
+                            Accept: "application/json",
                         }
                     }
                 );
@@ -69,14 +70,14 @@ const StateCreateForm = () => {
                         `${process.env.NEXT_PUBLIC_API_URL}/api/advertisements/category/${attribute.id}/values`,
                         {
                             headers: {
-                                "Content-Type": "application/json",
+                                 Accept: "application/json",
                             }
                         }
                     );
                     const result = await response.json();
                     values[attribute.id] = result.data || [];
                 }))
-
+                if (ignore) return;
                 setAttributeValues(values);
             } catch (err) {
                 setError(`خطایی در دریافت داده ها`);
@@ -240,6 +241,9 @@ const StateCreateForm = () => {
     if (lat) formData.append("lat", lat);
     if (willingToTrade) formData.append("willing_to_trade", willingToTrade);
     if (price) formData.append("price", price);
+    Object.values(selectedAttributeValues).forEach((value_id) => {
+      if (value_id) formData.append("category_value_id[]", parseInt(value_id));
+    });
 
     for (const [key, value] of formData.entries()) {
       console.log(key, value);
