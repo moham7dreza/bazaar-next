@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const LoginModal = ({onClose}) => {
 
@@ -9,39 +9,48 @@ const LoginModal = ({onClose}) => {
     const [step, setStep] = React.useState(1);
     const [token, setToken] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-    const [message, setMessage] = React.useState('');
+    const [error, setError] = React.useState(null);
+    const [success, setSuccess] = React.useState(null);
     const [csrfToken, setCsrfToken] = React.useState('');
 
-    const fetchCsrfToken = async () => {
-        try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
-                {
-                    method: "GET",
-                    credentials: "include",
-                }
-            );
-            console.log(`وضعیت توکن`, response.status);
+    useEffect(() => {
+        const fetchCsrfToken = async () => {
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
+                    {
+                        method: "GET",
+                        credentials: "include",
+                    }
+                );
+                console.log(`وضعیت توکن`, response.status);
 
-            const token = document.cookie
-                .split("; ")
-                .find((row) => row.startsWith("XSRF-TOKEN="))
-                ?.split("=")[1];
-            if (token) {
-                setCsrfToken(token);
+                const token = document.cookie
+                    .split("; ")
+                    .find((row) => row.startsWith("XSRF-TOKEN="))
+                    ?.split("=")[1];
+                if (token) {
+                    setCsrfToken(token);
+                }
+            } catch (err) {
+                setError(`خطایی در دریافت CSRF`);
+                console.error("خطا", err.message);
             }
-        } catch (err) {
-            console.error("خطا", err.message);
-        }
-    };
+        };
+        fetchCsrfToken();
+    }, []);
 
     const sendOtp = async () => {
+        if (!csrfToken) {
+            setError("خطا در دریافت csrf");
+            return;
+        }
+
         setLoading(true);
-        setMessage('');
+        setError(null);
+        setSuccess(null);
 
         try {
-            fetchCsrfToken();
-
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`,
                 {
@@ -49,19 +58,73 @@ const LoginModal = ({onClose}) => {
                     headers: {
                         "X-XSRF-TOKEN": csrfToken,
                         Accept: "application/json",
+                        "Content-Type": "application/json",
                     },
                     credentials: "include",
                     body: JSON.stringify({mobile}),
                 }
             );
-            if (!response.ok) throw Error('خطا در ارسال کد تایید');
+            if (!response.ok) {
+                setError('خطا در ارسال کد تایید')
+                return;
+            }
 
             const result = await response.json();
-            setToken(result.token);
+
+            setToken(result.data.token);
             setStep(2)
-            setMessage(result.message)
+            setSuccess(result.meta.messages[0])
         } catch (e) {
             console.error(e)
+            setError(e.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const verifyOtp = async () => {
+        if (!csrfToken) {
+            setError("خطا در دریافت csrf");
+            return;
+        }
+        if (!token) {
+            setError("خطا در دریافت توکن");
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`,
+                {
+                    method: "POST",
+                    headers: {
+                        "X-XSRF-TOKEN": csrfToken,
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        otp,
+                        mobile,
+                        token,
+                    }),
+                }
+            );
+            if (!response.ok) {
+                setError('خطا در ارسال کد تایید')
+                return;
+            }
+
+            const result = await response.json();
+            console.log(result);
+            setSuccess(result.message)
+        } catch (e) {
+            console.error(e)
+            setError(e.message);
         } finally {
             setLoading(false);
         }
@@ -87,7 +150,7 @@ const LoginModal = ({onClose}) => {
                                 <input value={mobile} onChange={(e) => setMobile(e.target.value)}
                                        className="border border-gray-300 rounded-md p-2" type="text"
                                        placeholder="شماره موبایل"/>
-                                <button className="bg-red-700 text-white rounded-md p-2" disabled={loading}
+                                <button className="bg-red-700 text-white rounded-md p-2 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={loading || !csrfToken}
                                         onClick={sendOtp}>تایید
                                     شماره موبایل
                                 </button>
@@ -97,11 +160,27 @@ const LoginModal = ({onClose}) => {
                     {
                         step === 2 && (
                             <div className="flex flex-col gap-4">
-                                <input type="text" placeholder="کد تایید"/>
-                                <button onClick={() => setStep(3)}>تایید کد</button>
+                                <input value={otp} onChange={(e) => setOtp(e.target.value)}
+                                       className="border border-gray-300 rounded-md p-2" type="text"
+                                       placeholder="کد تایید"/>
+                                <button className="bg-red-700 text-white rounded-md p-2" disabled={loading || !csrfToken}
+                                        onClick={verifyOtp}>تایید کد
+                                </button>
                             </div>
                         )
                     }
+                    <div className="mt-2">
+                        {error && (
+                            <div className="p-4 bg-red-100 border-red-400 text-red-700 rounded-md">
+                                {error}
+                            </div>
+                        )}
+                        {success && (
+                            <div className="p-4 bg-green-100 border-green-400 text-green-700 rounded-md">
+                                {success}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
