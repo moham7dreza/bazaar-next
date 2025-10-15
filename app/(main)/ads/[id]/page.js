@@ -48,7 +48,7 @@ const Ads = async ({params}) => {
         <section className="px-4 pt-12 lg:w-1/2 lg:order-2">
           <div>
             <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}/${ad.image.indexArray.medium}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}/${ad.image?.indexArray.medium}`}
               alt={ad.title}
               className="rounded"
               width={700}
@@ -58,7 +58,7 @@ const Ads = async ({params}) => {
                   {
                       gallery?.map((image, index) => (
                           <Image
-                              src={`${process.env.NEXT_PUBLIC_API_URL}/${image.url.indexArray.medium}`}
+                              src={`${process.env.NEXT_PUBLIC_API_URL}/${image.url?.indexArray.medium}`}
                               alt={ad.title}
                               className="rounded"
                               width={100}
