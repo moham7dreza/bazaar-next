@@ -3,6 +3,8 @@ import React from "react";
 import Link from "next/link";
 import CityList from "@/app/components/ui/home/CityList";
 import CategoryHeader from "@/app/components/ui/home/CategoryHeader";
+import AdRegisterButton from "@/app/components/ui/home/AdRegisterButton";
+import LoginRegisterButton from "@/app/components/ui/home/LoginRegisterButton";
 
 const MainHeader = () => {
   return (
@@ -87,10 +89,12 @@ const MainHeader = () => {
         </section>
 
         <section className="hidden lg:flex text-gray-500">
-          <Link href="/admin" className="flex justify-center items-center bg-red-700 text-white px-5 py-2 font-bold rounded">
-            ثبت آگهی
-          </Link>
+          <LoginRegisterButton/>
         </section>
+
+          <section className="hidden lg:flex text-gray-500">
+             <AdRegisterButton/>
+          </section>
       </header>
     </div>
   );
