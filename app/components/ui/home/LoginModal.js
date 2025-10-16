@@ -52,7 +52,7 @@ const LoginModal = ({onClose}) => {
 
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`,
+                `${process.env.NEXT_PUBLIC_API_URL}/auth/send-otp`,
                 {
                     method: "POST",
                     headers: {
@@ -98,7 +98,7 @@ const LoginModal = ({onClose}) => {
 
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`,
+                `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`,
                 {
                     method: "POST",
                     headers: {
