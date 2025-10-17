@@ -1,5 +1,6 @@
 'use client'
 import React, {useEffect} from 'react';
+import {useAuth} from "@/app/contexts/AuthContext";
 
 const LoginModal = ({onClose}) => {
 
@@ -13,6 +14,8 @@ const LoginModal = ({onClose}) => {
     const [success, setSuccess] = React.useState(null);
     const [csrfToken, setCsrfToken] = React.useState('');
 
+    const {login} = useAuth()
+
     useEffect(() => {
         const fetchCsrfToken = async () => {
             try {
@@ -20,6 +23,7 @@ const LoginModal = ({onClose}) => {
                     `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
                     {
                         method: "GET",
+                        Accept: "application/json",
                         credentials: "include",
                     }
                 );
@@ -121,7 +125,13 @@ const LoginModal = ({onClose}) => {
 
             const result = await response.json();
             console.log(result);
-            setSuccess(result.message)
+            if (response.ok && data.token) {
+                await login(data.token)
+                setSuccess('با موفقیت وارد شدید')
+                setTimeout(() => onClose(false), 1000)
+            } else {
+                setError('خطا در فرایند لاگین')
+            }
         } catch (e) {
             console.error(e)
             setError(e.message);
