@@ -16,51 +16,34 @@ const LoginModal = ({onClose}) => {
 
     const {login} = useAuth()
 
-    useEffect(() => {
-        const fetchCsrfToken = async () => {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
-                    {
-                        method: "GET",
-                        Accept: "application/json",
-                        credentials: "include",
-                    }
-                );
-                console.log(`وضعیت توکن`, response.status);
-
-                const token = document.cookie
-                    .split("; ")
-                    .find((row) => row.startsWith("XSRF-TOKEN="))
-                    ?.split("=")[1];
-                if (token) {
-                    setCsrfToken(token);
-                }
-            } catch (err) {
-                setError(`خطایی در دریافت CSRF`);
-                console.error("خطا", err.message);
+    function getCsrfToken() {
+        if (typeof document === "undefined") return null;
+        const cookies = document.cookie.split(";").map((c) => c.trim());
+        for (const c of cookies) {
+            if (c.startsWith("XSRF-TOKEN=")) {
+                return decodeURIComponent(c.substring("XSRF-TOKEN=".length));
             }
-        };
-        fetchCsrfToken();
-    }, []);
+        }
+        return null;
+    }
 
     const sendOtp = async () => {
-        if (!csrfToken) {
-            setError("خطا در دریافت csrf");
-            return;
-        }
-
         setLoading(true);
         setError(null);
         setSuccess(null);
 
         try {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`, {
+                credentials: "include",
+            });
+            setCsrfToken(getCsrfToken())
+
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`,
                 {
                     method: "POST",
                     headers: {
-                        "X-XSRF-TOKEN": csrfToken,
+                        "X-XSRF-TOKEN": csrfToken || "",
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
@@ -87,10 +70,6 @@ const LoginModal = ({onClose}) => {
     }
 
     const verifyOtp = async () => {
-        if (!csrfToken) {
-            setError("خطا در دریافت csrf");
-            return;
-        }
         if (!token) {
             setError("خطا در دریافت توکن");
             return;
@@ -101,12 +80,17 @@ const LoginModal = ({onClose}) => {
         setSuccess(null);
 
         try {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`, {
+                credentials: "include",
+            });
+            setCsrfToken(getCsrfToken)
+
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`,
                 {
                     method: "POST",
                     headers: {
-                        "X-XSRF-TOKEN": csrfToken,
+                        "X-XSRF-TOKEN": csrfToken || "",
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
@@ -160,7 +144,7 @@ const LoginModal = ({onClose}) => {
                                 <input value={mobile} onChange={(e) => setMobile(e.target.value)}
                                        className="border border-gray-300 rounded-md p-2" type="text"
                                        placeholder="شماره موبایل"/>
-                                <button className="bg-red-700 text-white rounded-md p-2 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={loading || !csrfToken}
+                                <button className="bg-red-700 text-white rounded-md p-2 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={loading}
                                         onClick={sendOtp}>تایید
                                     شماره موبایل
                                 </button>
@@ -173,7 +157,7 @@ const LoginModal = ({onClose}) => {
                                 <input value={otp} onChange={(e) => setOtp(e.target.value)}
                                        className="border border-gray-300 rounded-md p-2" type="text"
                                        placeholder="کد تایید"/>
-                                <button className="bg-red-700 text-white rounded-md p-2" disabled={loading || !csrfToken}
+                                <button className="bg-red-700 text-white rounded-md p-2" disabled={loading}
                                         onClick={verifyOtp}>تایید کد
                                 </button>
                             </div>
