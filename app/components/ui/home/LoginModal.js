@@ -56,7 +56,7 @@ const LoginModal = ({onClose}) => {
 
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/auth/send-otp`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`,
                 {
                     method: "POST",
                     headers: {
@@ -102,7 +102,7 @@ const LoginModal = ({onClose}) => {
 
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`,
                 {
                     method: "POST",
                     headers: {
@@ -124,10 +124,10 @@ const LoginModal = ({onClose}) => {
             }
 
             const result = await response.json();
-            console.log(result);
-            if (response.ok && data.token) {
-                await login(data.token)
-                setSuccess('با موفقیت وارد شدید')
+
+            if (response.ok) {
+                await login(token)
+                setSuccess(result.meta.messages[0])
                 setTimeout(() => onClose(false), 1000)
             } else {
                 setError('خطا در فرایند لاگین')

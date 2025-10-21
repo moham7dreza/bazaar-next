@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         setLoading(true)
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
             credentials: 'include',
             headers: {
                 Accept: 'application/json',
