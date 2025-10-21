@@ -67,8 +67,26 @@ export const AuthProvider = ({ children }) => {
         return null;
     }
 
+    const logout = useCallback(async () => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`, {
+            credentials: "include",
+        });
+        const csrfToken = getCsrfToken();
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "X-XSRF-TOKEN": csrfToken,
+            },
+            credentials: "include",
+        });
+        setUser(null);
+        refreshUser();
+    }, [refreshUser]);
+
     return (
-        <AuthContext.Provider value={{ user, loading, login, refreshUser }}>
+        <AuthContext.Provider value={{ user, loading, login, refreshUser, logout }}>
             {children}
         </AuthContext.Provider>
     );
