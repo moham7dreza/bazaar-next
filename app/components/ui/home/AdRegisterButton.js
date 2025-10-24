@@ -8,8 +8,9 @@ const AdRegisterButton = () => {
     return (
         <div>
             {
-                user && (
-                    <Link href="/admin" className="flex justify-center items-center bg-red-700 text-white px-5 py-2 font-bold rounded">
+                // user &&
+                (
+                    <Link href="/ads/create" className="flex justify-center items-center bg-red-700 text-white px-5 py-2 font-bold rounded">
                         ثبت آگهی
                     </Link>
                 )
