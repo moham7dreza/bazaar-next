@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
             credentials: "include",
         });
         const csrfToken = getCsrfToken();
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -85,8 +85,16 @@ export const AuthProvider = ({ children }) => {
         refreshUser();
     }, [refreshUser]);
 
+    const data = {
+        user,
+        loading,
+        login,
+        refreshUser,
+        logout
+    }
+
     return (
-        <AuthContext.Provider value={{ user, loading, login, refreshUser, logout }}>
+        <AuthContext.Provider value={data}>
             {children}
         </AuthContext.Provider>
     );
