@@ -146,9 +146,9 @@ const CreateAdsPage = () => {
         }
       });
 
-      Object.entries(selectedAttributeValues).forEach((valId) => {
-        if (valId) {
-          formData.append("category_values[]", parseInt(valId));
+      Object.entries(selectedAttributeValues).forEach((attribute_id, value_id) => {
+        if (value_id) {
+          formData.append("category_values[]", Number.parseInt(valId));
         }
       });
 
@@ -307,6 +307,13 @@ const CreateAdsPage = () => {
     }
   };
 
+  const handleAttributeChange = (attribute_id, value_id) => {
+    setSelectedAttributeValues((prev) => ({
+      ...prev,
+      [attribute_id]: value_id,
+    }))
+  }
+
   return (
     <div>
       <div className="max-w-xl mx-auto bg-white rounded-lg shadow p-6 mt-8">
@@ -402,7 +409,7 @@ const CreateAdsPage = () => {
                         <select
                           name={`attr_${attr.id}`}
                           value={form[`attr_${attr.id}`]}
-                          onChange={handleChange}
+                          onChange={() => handleAttributeChange(attr.id, e.target.value)}
                           className="w-full p-2 border border-gray-300 rounded-md"
                         >
                           {(attributeValues[attr.id] || [])
