@@ -128,10 +128,55 @@ const CreateAdsPage = () => {
     }));
   };
 
+  const validateStep = (currentStep) => {
+    setError("");
+
+    if (currentStep === 0) {
+      if (!form.title || !form.description || !form.contact) {
+        setError("لطفا تمامی فیلد ها را پر کنید");
+        return false;
+      }
+    }
+
+    if (currentStep === 1) {
+      if (!form.category_id) {
+        setError("لطفا دسته بندی را انتخاب کنید");
+        return false;
+      }
+      if (!form.city_id) {
+        setError("لطفا شهر را انتخاب کنید");
+        return false;
+      }
+    }
+
+    if (currentStep === 2) {
+      if (
+          !form.ads_type ||
+          !form.ads_status ||
+          !form.tags ||
+          !form.lng ||
+          !form.lat ||
+          !form.willing_to_trade
+      ) {
+        setError("لطفا تمامی فیلد ها را پر کنید");
+        return false;
+      }
+    }
+
+    if (currentStep === 3) {
+      if (!form.price || !form.image) {
+        setError("لطفا قیمت و تصویر را انتخاب کنید");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleNext = () => {
-    // if (validateStep(step)) {
-    setStep(step + 1);
-    // }
+    if (validateStep(step)) {
+      setStep(step + 1);
+    }
   };
 
   const handleBack = () => {
