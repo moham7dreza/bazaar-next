@@ -33,6 +33,7 @@ const CreateAdsPage = () => {
   const [categoryAttributes, setCategoryAttributes] = useState([]);
   const [attributeValues, setAttributeValues] = useState({});
   const [selectedAttributeValues, setSelectedAttributeValues] = useState({});
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -114,9 +115,119 @@ const CreateAdsPage = () => {
       });
   }, [form.category_id]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
     console.log(form);
+
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`, {
+        credentials: "include",
+      });
+      const csrfToken = getCsrfToken();
+      const formData = new FormData();
+      Object.entries(form).forEach(([k, v]) => {
+        if (v !== null && v !== undefined && v !== "") {
+          if (k === "price" || k === "lng" || k === "lat") {
+            formData.append(k, Number(v));
+          } else if (k === "willing_to_trade") {
+            formData.append(k, Number(v));
+          } else if (k === "category_id" || k === "city_id") {
+            formData.append(k, Number(v));
+          } else {
+            formData.append(k, v);
+          }
+        }
+      });
+
+      Object.entries(selectedAttributeValues).forEach((valId) => {
+        if (valId) {
+          formData.append("category_values[]", parseInt(valId));
+        }
+      });
+
+      const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/panel/advertisements/advertisement`,
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              "X-XSRF-TOKEN": csrfToken,
+              Accept: "application/json",
+            },
+            credentials: "include",
+          }
+      );
+
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 419) {
+          throw new Error("Session expired, please login again");
+        }
+        throw new Error(data.message || "An error occurred");
+      }
+
+      setSuccess(data.message || "آگهی با موفقیت ثبت شد");
+      setForm({
+        title: "",
+        description: "",
+        contact: "",
+        category_id: "",
+        city_id: "",
+        ads_type: "",
+        ads_status: "",
+        tags: "",
+        lng: "",
+        lat: "",
+        willing_to_trade: "",
+        price: "",
+        image: "",
+        imagePreview: "",
+      });
+      setStep(0);
+      setSelectedAttributeValues({});
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const validateForm = () => {
+    if (!form.title || !form.description || !form.contact) {
+      setError("لطفا تمامی فیلد ها را پر کنید");
+      return false;
+    }
+
+    if (!form.category_id || !form.city_id) {
+      setError("لطفا دسته بندی و شهر را انتخاب کنید");
+      return false;
+    }
+
+    if (
+        !form.ads_type ||
+        !form.ads_status ||
+        !form.tags ||
+        !form.lng ||
+        !form.lat ||
+        !form.willing_to_trade
+    ) {
+      setError("لطفا تمامی فیلد ها را پر کنید");
+      return false;
+    }
+
+    if (!form.price || !form.image) {
+      setError("لطفا قیمت و تصویر را انتخاب کنید");
+      return false;
+    }
+
+    return true;
   };
 
   const handleChange = (e) => {
@@ -182,6 +293,17 @@ const CreateAdsPage = () => {
   const handleBack = () => {
     if (step > 0) {
       setStep(step - 1);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setForm({
+        ...form,
+        image: file,
+        imagePreview: URL.createObjectURL(file),
+      });
     }
   };
 
@@ -351,8 +473,8 @@ const CreateAdsPage = () => {
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="active">فعال</option>
-                  <option value="inactive">غیر فعال</option>
+                  <option value="new">نوع</option>
+                  <option value="used">دسته دوم</option>
                 </select>
               </div>
               <input
@@ -392,8 +514,8 @@ const CreateAdsPage = () => {
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="yes">بله</option>
-                  <option value="no">خیر</option>
+                  <option value="1">بله</option>
+                  <option value="0">خیر</option>
                 </select>
               </div>
 
@@ -429,9 +551,18 @@ const CreateAdsPage = () => {
               <input
                 type="file"
                 name="image"
-                onChange={handleChange}
+                onChange={handleImageChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
+              {form.imagePreview && (
+                  <div className="mt-2">
+                    <img
+                        src={form.imagePreview}
+                        alt="image"
+                        className="w-24 h-24 h-auto"
+                    />
+                  </div>
+              )}
               <div className="flex justify-between mt-4">
                 <button
                   onClick={handleBack}
@@ -499,7 +630,7 @@ const CreateAdsPage = () => {
               </div>
               <div>
                 <p>وضعیت آگهی</p>
-                <p>{form.ads_status === "inactive" ? "غیر فعال" : "فعال"}</p>
+                <p>{form.ads_status === 'new' ? 'نو' : 'دست دوم'}</p>
               </div>
               <div>
                 <p>نوع آگهی</p>
