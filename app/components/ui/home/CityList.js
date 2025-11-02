@@ -27,7 +27,7 @@ const CityList = ({onCityChanged, selectedCity}) => {
         }
         fetchData()
     }, [])
-    console.log(cities)
+
     return (
         <CityModal cities={cities} onCityChanged={onCityChanged} selectedCity={selectedCity}/>
     );
