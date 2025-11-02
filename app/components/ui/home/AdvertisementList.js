@@ -1,12 +1,15 @@
 'use client'
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import {useFilters} from "@/app/contexts/FilterProvider";
 
 const AdvertisementList = () => {
     const [advertisements, setAdvertisements] = useState([]);
     const [loading, setLoading] = useState(false);
+    const {filters} = useFilters()
+
     const converterToJalali = (date) => {
         const options = {
             year: "numeric",
@@ -35,7 +38,7 @@ const AdvertisementList = () => {
                     throw new Error('خطا در دریافت اطلاعات')
                 }
                 const result = await res.json();
-                setAdvertisements(result)
+                setAdvertisements(result.data)
                 setLoading(false);
             } catch (e) {
                 console.error(e);
@@ -43,6 +46,15 @@ const AdvertisementList = () => {
         }
         fetchAds();
     }, [])
+
+    const filteredAdvertisements = useMemo(() => {
+        return advertisements.filter(advertisement => {
+            return !(filters.city &&
+                advertisement.city?.name !== filters.city &&
+                filters.city !== 'تهران');
+
+        })
+    }, [advertisements, filters])
 
     if (loading) {
         return (
@@ -53,7 +65,7 @@ const AdvertisementList = () => {
     return (
         <>
             {
-                advertisements?.data?.map((ad, index) => (
+                filteredAdvertisements.map((ad, index) => (
                     <article key={index} className="w-full md:w-1/2 xl:w-1/3">
                         <Link href={`/ads/${ad.id}`}>
                             <div className="border flex justify-between p-3 rounded m-2">
