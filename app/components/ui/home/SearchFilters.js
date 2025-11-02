@@ -1,16 +1,25 @@
+'use client'
+
 import React from 'react';
 import CityList from "@/app/components/ui/home/CityList";
 import CategoryHeader from "@/app/components/ui/home/CategoryHeader";
+import {useFilters} from "@/app/contexts/FilterProvider";
 
 const SearchFilters = () => {
+
+    const {filters, setFilter} = useFilters()
+
     return (
         <>
             <section className="hidden lg:flex text-gray-500">
-                <CityList/>
+                <CityList
+                    onCityChanged={(city) => setFilter('city', city)}
+                    selectedCity={filters.city}
+                />
             </section>
 
             <section className="hidden lg:flex text-gray-500">
-                <CategoryHeader/>
+                {/*<CategoryHeader/>*/}
             </section>
 
             <section className="container mx-4 lg:mx-0 lg:w-2/6 flex justify-center items-center bg-gray-100 rounded-sm">

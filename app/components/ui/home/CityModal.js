@@ -1,13 +1,13 @@
 'use client'
 import React from 'react';
 
-const CityModal = ({cities}) => {
+const CityModal = ({cities, onCityChanged, selectedCity}) => {
     const [showModal, setShowModal] = React.useState(false);
-    // use selected city
-    const [selectedCity, setSelectedCity] = React.useState('انتخاب شهر');
 
     const handleCitySelect = (city) => {
-        setSelectedCity(city);
+        if (onCityChanged) {
+            onCityChanged(city);
+        }
         setShowModal(false);
     }
 
@@ -17,7 +17,7 @@ const CityModal = ({cities}) => {
                 onClick={() => setShowModal(true)}
             >
                 <i className="fa fa-map-marker text-xl text-gray-500"></i>
-                <p>{selectedCity}</p>
+                <p>{selectedCity || 'انتخاب شهر'}</p>
                 <i className="fa fa-angle-down text-xl text-gray-500"></i>
             </div>
             {
