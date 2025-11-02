@@ -1,11 +1,10 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import CityList from "@/app/components/ui/home/CityList";
-import CategoryHeader from "@/app/components/ui/home/CategoryHeader";
 import AdRegisterButton from "@/app/components/ui/home/AdRegisterButton";
 import LoginRegisterButton from "@/app/components/ui/home/LoginRegisterButton";
 import {AuthProvider} from "@/app/contexts/AuthContext";
+import SearchFilters from "@/app/components/ui/home/SearchFilters";
 
 const MainHeader = () => {
   return (
@@ -50,25 +49,7 @@ const MainHeader = () => {
                   </Link>
               </section>
 
-              <section className="hidden lg:flex text-gray-500">
-                  <CityList/>
-              </section>
-
-              <section className="hidden lg:flex text-gray-500">
-                  <CategoryHeader/>
-              </section>
-
-              <section className="container mx-4 lg:mx-0 lg:w-2/6 flex justify-center items-center bg-gray-100 rounded-sm">
-                  <input
-                      type="text"
-                      placeholder="جستجو در همه آگهی ها"
-                      className="fa border-l lg:border-l-0 border-gray-300 w-5/6 py-1 my-2 ps-2 lg:w-[94%] placeholder:text-gray-400 placeholder:text-lg bg-gray-100"
-                  />
-                  <div className="mx-1 flex justify-center lg:hidden  items-center space-x-2 space-x-reverse">
-                      <button className="text-gray-600 ms-2">تهران</button>
-                      <i className="fa fa-map-marker text-xl text-gray-400"></i>
-                  </div>
-              </section>
+              <SearchFilters/>
 
               <section className="hidden lg:flex text-gray-500">
                   <button className="flex justify-center items-center space-x-3 space-x-reverse">
