@@ -1,10 +1,13 @@
 import MainHeader from "../components/ui/home/MainHeader";
+import {FilterProvider} from "@/app/contexts/FilterProvider";
 
 export default function MainLayout({ children }) {
   return (
     <>
-      <MainHeader />
-      {children}
+      <FilterProvider>
+          <MainHeader />
+          {children}
+      </FilterProvider>
     </>
   );
 }
