@@ -38,3 +38,21 @@ reload: ## Update and refresh application
 	next info
 	next lint
 	@echo "${COLOR_GREEN}✓ Application reloaded successfully!${COLOR_RESET}"
+
+git-clean: ## prune unused files and compress files to reduce repo size
+	git gc --prune=now --aggressive
+
+git-hooks: ## set git hooks path to custom .githooks dir
+	sudo chmod +x .githooks
+	git config core.hooksPath .githooks
+
+git-alias: ## add aliases to git
+	git config --global alias.st status
+	git config --global alias.co checkout
+	git config --global alias.br branch
+	git config --global alias.lg "log --oneline --graph --all --decorate"
+
+git-user:
+	git config --global user.name "Mohamadreza Rezaei"
+	git config --global user.email "me.moham6dreza@gmail.com"
+	git config --list
