@@ -49,10 +49,13 @@ const AdvertisementList = () => {
 
     const filteredAdvertisements = useMemo(() => {
         return advertisements.filter(advertisement => {
-            return !(filters.city &&
-                advertisement.city?.name !== filters.city &&
-                filters.city !== 'تهران');
-
+            if (filters.city && advertisement.city?.name !== filters.city) {
+                return false;
+            }
+            if (filters.category && advertisement.category?.name !== filters.category) {
+                return false;
+            }
+            return true;
         })
     }, [advertisements, filters])
 

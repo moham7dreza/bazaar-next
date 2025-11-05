@@ -1,13 +1,13 @@
 'use client'
 import React from 'react';
 
-const CategoryModal = ({categories}) => {
+const CategoryModal = ({categories, onCategoryChanged, selectedCategory}) => {
     const [showModal, setShowModal] = React.useState(false);
-    // use selected category
-    const [selectedCategory, setSelectedCategory] = React.useState('انتخاب دسته بندی');
 
     const handleCategorySelect = (category) => {
-        setSelectedCategory(category);
+        if (onCategoryChanged) {
+            onCategoryChanged(category)
+        }
         setShowModal(false);
     }
 
@@ -16,12 +16,12 @@ const CategoryModal = ({categories}) => {
             <button onClick={() => setShowModal(true)}
                 className="flex justify-center items-center space-x-3 space-x-reverse text-gray-500 hover:text-blue-600 transition-colors"
             >
-                <p>{selectedCategory}</p>
+                <p>{selectedCategory || 'انتخاب دسته بندی'}</p>
                 <i className="fa fa-angle-down text-xl text-gray-500"></i>
             </button>
             {
                 showModal && (
-                    <div className='fixed inset-0 bg-black bg-opacategory-50 flex items-center justify-center z-[99999]'>
+                    <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[99999]'>
                         <div className='bg-white rounded-lg p-9 w-96 max-h-96 overflow-y-auto'>
                             <div className='flex items-center justify-between mb-4'>
                                 <h3 className='text-lg font-semibold'>

@@ -19,7 +19,10 @@ const SearchFilters = () => {
             </section>
 
             <section className="hidden lg:flex text-gray-500">
-                {/*<CategoryHeader/>*/}
+                <CategoryHeader
+                    onCategoryChanged={(category) => setFilter('category', category)}
+                    selectedCategory={filters.category}
+                />
             </section>
 
             <section className="container mx-4 lg:mx-0 lg:w-2/6 flex justify-center items-center bg-gray-100 rounded-sm">
