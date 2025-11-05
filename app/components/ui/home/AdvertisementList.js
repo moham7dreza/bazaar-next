@@ -55,6 +55,9 @@ const AdvertisementList = () => {
             if (filters.category && advertisement.category?.name !== filters.category) {
                 return false;
             }
+            if (filters.phrase && ! advertisement.title.toLocaleLowerCase().includes(filters.phrase.toLowerCase())) {
+                return false;
+            }
             return true;
         })
     }, [advertisements, filters])

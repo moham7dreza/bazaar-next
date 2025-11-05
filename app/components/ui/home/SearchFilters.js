@@ -27,6 +27,8 @@ const SearchFilters = () => {
 
             <section className="container mx-4 lg:mx-0 lg:w-2/6 flex justify-center items-center bg-gray-100 rounded-sm">
                 <input
+                    onChange={(e) => setFilter('phrase', e.target.value)}
+                    value={filters.phrase}
                     type="text"
                     placeholder="جستجو در همه آگهی ها"
                     className="fa border-l lg:border-l-0 border-gray-300 w-5/6 py-1 my-2 ps-2 lg:w-[94%] placeholder:text-gray-400 placeholder:text-lg bg-gray-100"
