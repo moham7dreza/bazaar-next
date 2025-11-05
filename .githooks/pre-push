@@ -4,7 +4,7 @@
 current_branch=$(git symbolic-ref --short HEAD)
 
 # Define allowed branch patterns
-allowed_patterns=("^feature/" "^bugfix/" "^hotfix/" "^improve/" "^staging/" "^master$")
+allowed_patterns=("^feature/" "^bugfix/" "^hotfix/" "^improve/" "^staging/" "^master$" "^demo$")
 
 # Check if the branch name matches any of the allowed patterns
 for pattern in "${allowed_patterns[@]}"; do
