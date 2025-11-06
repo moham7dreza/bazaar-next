@@ -2,6 +2,13 @@
 1. frontend of [bazaar-laravel](https://github.com/moham7dreza/bazaar-laravel) project in my repo
 2. in laravel if you are run `make dev` all servers should be up include `NEXT` and no need to run `npm run dev` here
 
+<div style="display:flex;flex-direction: column;gap: 1rem;">
+    <div>Root</div>
+    <img style="margin: auto;" src="public/images/art/index.png" width="810" height="407" alt="backend-services">
+    <div style="margin: 0.3rem;">Admin</div>
+    <img style="margin: auto;" src="public/images/art/admin.png" width="810" height="407" alt="filament">
+</div>
+
 ### Requirements
 1. `NPM` and `Node` above v20
 
