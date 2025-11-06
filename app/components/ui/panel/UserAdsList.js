@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 const UserAdsList = () => {
   const [userAds, setUserAds] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [paymentLoading, setPaymentLoading] = useState({});
 
   useEffect(() => {
     const fetchUserAds = async () => {
@@ -31,6 +32,36 @@ const UserAdsList = () => {
     fetchUserAds();
   }, []);
 
+  const handleSpecialAdvertisement = async (advertisementId) => {
+      setPaymentLoading((prev) => ({ ...prev, [advertisementId]: true }));
+
+      try {
+          const response = await fetch(
+              '/api/payment',
+              {
+                  method: 'POST',
+                  headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      amount: 1000000,
+                      description: 'ویژه کردن آگهی',
+                  }),
+              }
+          );
+
+          const result = await response.json();
+          if (result.success && result.payment_url) {
+              window.open(result.payment_url, '_blank');
+          }
+      } catch (e) {
+          console.error(e);
+      } finally {
+          setPaymentLoading((prev) => ({ ...prev, [advertisementId]: false }));
+      }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {loading ? (
@@ -51,12 +82,26 @@ const UserAdsList = () => {
               <p className="text-sm text-gray-500">{ad.description}</p>
               <p className="text-sm text-gray-500">{ad.price}</p>
               <p className="text-sm text-gray-500">
-                {ad.status == 1
+                {ad.status === 1
                   ? "فعال"
-                  : ad.status == 3
+                  : ad.status === 3
                   ? "درحال بررسی"
                   : "رد شده"}
               </p>
+                {
+                    ! ad.is_special && (
+                        <button
+                            disabled={paymentLoading[ad.id]}
+                            className="bg-rose-500 text-white px-4 py-2 rounded-md"
+                            onClick={() => handleSpecialAdvertisement(ad.id)}>
+                            {
+                                paymentLoading[ad.id] ? (
+                                    <i className="fa fa-spin"></i>
+                                ) : "ویژه کردن آگهی"
+                            }
+                        </button>
+                    )
+                }
             </div>
           ))}
         </div>
