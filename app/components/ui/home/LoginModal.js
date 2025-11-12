@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useAuth} from "@/app/contexts/AuthContext";
 
 const LoginModal = ({onClose}) => {

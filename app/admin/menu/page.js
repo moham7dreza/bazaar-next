@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import {apiGet} from "@/app/lib/fetchUtils";
 import MenuList from "@/app/admin/menu/MenuList";
 
 const MenuPage = async () => {
