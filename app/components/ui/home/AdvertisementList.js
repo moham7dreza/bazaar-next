@@ -97,7 +97,7 @@ const AdvertisementList = () => {
 
                                 <section>
                                     <Image
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}/${ad.image?.indexArray.medium}`}
+                                        src={`${process.env.NEXT_PUBLIC_API_URL}/${ad.image?.indexArray?.medium}`}
                                         width={130}
                                         height={130}
                                         alt="ads"
