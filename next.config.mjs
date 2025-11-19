@@ -15,6 +15,10 @@ const nextConfig = {
                 protocol: 'http',
                 hostname: 'bazaar.local',
             },
+            {
+                protocol: 'http',
+                hostname: 'bazaar-laravel.test',
+            },
         ]
     }
 };
