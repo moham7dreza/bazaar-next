@@ -1,5 +1,5 @@
 ### Advertisement shop made with Next.js
-1. frontend of [bazaar-laravel](https://github.com/moham7dreza/bazaar-laravel) project in my repo
+1. frontend of [adhub-laravel](https://github.com/moham7dreza/adhub-laravel) project in my repo
 2. in laravel if you are run `make dev` all servers should be up include `NEXT` and no need to run `npm run dev` here
 
 <div style="display:flex;flex-direction: column;gap: 1rem;">

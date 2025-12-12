@@ -13,11 +13,11 @@ const nextConfig = {
             },
             {
                 protocol: 'http',
-                hostname: 'bazaar.local',
+                hostname: 'adhub.local',
             },
             {
                 protocol: 'http',
-                hostname: 'bazaar-laravel.test',
+                hostname: 'adhub-laravel.test',
             },
         ]
     }
